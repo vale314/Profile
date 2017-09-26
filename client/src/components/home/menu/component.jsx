@@ -19,7 +19,8 @@ import Button from 'material-ui/Button';
 
 const MenuComponent=({
     handleClick,
-    open
+    open,
+    handleClickRoute
 })=>(
     <Drawer
     type="temporary"
@@ -35,17 +36,17 @@ const MenuComponent=({
       <ListItemText style={{textAlign:'center'}} primary="Yessica"/>
       <Divider light style={{marginBottom:'50px'}}/>
       
-      <ListItem button  component="listado" style={{textAlign:'center'}}>
-        <ListItemText primary="Listado de grietas" />
+      <ListItem button component="listado" style={{textAlign:'center'}} onClick={()=>handleClickRoute("/listado")}>
+          <ListItemText primary="Listado de grietas"  />
       </ListItem>
-      <ListItem button component="publica" style={{textAlign:'center'}}>
-        <ListItemText primary="Publica Tu Grieta" />
+      <ListItem button component="publica" style={{textAlign:'center'}} onClick={()=>handleClickRoute("/publica")}>
+        <ListItemText primary="Publica Tu Grieta"  />
       </ListItem>
-      <ListItem button component="revisa" style={{textAlign:'center'}}>
-        <ListItemText primary="Revisa Grietas" />
+      <ListItem button  component="revisa" style={{textAlign:'center'}} onClick={()=>handleClickRoute("/revisa")}>
+        <ListItemText primary="Revisa Grietas"   />
       </ListItem>
-      <ListItem button component="acerca" style={{textAlign:'center'}}>
-        <ListItemText primary="Acerca" />
+      <ListItem button  component="acerca" style={{textAlign:'center'}} onClick={()=>handleClickRoute("/acerca")}>
+        <ListItemText primary="Acerca"  />
       </ListItem>
       <Button raised style={{margin:'15px', marginTop:'50px'}} onClick={handleClick}>
       Cerrar Menu

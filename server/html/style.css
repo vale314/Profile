@@ -1,9 +1,4 @@
 .Main {
-    background-image: url(https://static.pexels.com/photos/573231/pexels-photo-573231.jpeg);
-    height: 100%;
-    /* Create the parallax scrolling effect */
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+
+    
 }

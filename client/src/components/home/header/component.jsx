@@ -15,11 +15,12 @@ import InboxIcon from 'material-ui-icons/Inbox';
 import DraftsIcon from 'material-ui-icons/Drafts';
 import Avatar from 'material-ui/Avatar';
 import Button from 'material-ui/Button';
-
+import ButtonHome from './button.jsx'
 
 const HeaderComponent = ({
     open,
-    handleClick
+    handleClick,
+    handleClickRoute
 }) => (
     <div >
 
@@ -30,13 +31,14 @@ const HeaderComponent = ({
                 aria-label="open drawer"
                 onClick={handleClick}
               >
-                <MenuIcon />
+              <MenuIcon  />
               </IconButton>
-              <Typography type="title" color="inherit" noWrap>
-                Persistent drawer
+              
+              <Typography style={{margin:'auto'}} type="title" color="inherit" noWrap onClick={()=>handleClickRoute(`/`)}>
+                Revisa Mi Grieta
               </Typography>
+            <ButtonHome handleClickRoute={handleClickRoute}/>
             </Toolbar>
-           
       </div>  
 );
 

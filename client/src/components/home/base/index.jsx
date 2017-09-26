@@ -2,23 +2,29 @@ import React from 'react';
 
 import { Switch, Route, Miss} from 'react-router-dom'
 import AppBar from 'material-ui/AppBar';
-
-
+import Divider from 'material-ui/Divider';
+import {Header} from 'semantic-ui-react'
 
   //dependencies
 import Menu from '../menu/index.jsx'
-import Header from '../header/index.jsx'
+import Headers from './routes/routesHeader.jsx'
+import Bodys from './routes/routesBodys.jsx'
 //routes
 
 
 const CardExampleExpandable = ({}) => (
   <div >
-    <AppBar>
+    <Header>
+    <AppBar position="static">
       <Route path='/' render={(props) => (
           <Menu {...props}  />
       )}/>
-      <Header />
+      <Headers />
     </AppBar>
+    </Header>
+
+    <Divider />
+    <Bodys />
   </div>
 );
 

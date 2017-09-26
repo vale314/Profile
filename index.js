@@ -11,7 +11,7 @@ app.use(express.static('./client/dist/'));
 
 
 
-app.get('/', (req,res)=>{
+app.get('*', (req,res)=>{
   console.log('hello')
   res.sendFile(path.join(__dirname, './server/html', 'index.html'));
 })

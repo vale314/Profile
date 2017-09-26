@@ -6,7 +6,7 @@ import Base from './components/home/index.jsx'
 const Main = () => (
     
         <Switch>
-          <Route path ='/' exact component={Base}/>
+          <Route path ='/' component={Base}/>
 
         </Switch>
     
