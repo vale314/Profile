@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Home from '../../header/index.jsx'
-import Login from '../../../login/header/index.jsx'
+import Home from '../../home/header/index.jsx'
+import Login from '../../login/header/index.jsx'
 import { Switch, Route, Miss} from 'react-router-dom'
 
 const CardExampleExpandable = () => (

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route, Miss} from 'react-router-dom'
 
-import Base from './components/home/index.jsx'
+import Base from './components/base/index.jsx'
 
 const Main = () => (
     

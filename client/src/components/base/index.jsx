@@ -6,7 +6,7 @@ import Divider from 'material-ui/Divider';
 import {Header} from 'semantic-ui-react'
 
   //dependencies
-import Menu from '../menu/index.jsx'
+import Menu from '../home/menu/index.jsx'
 import Headers from './routes/routesHeader.jsx'
 import Bodys from './routes/routesBodys.jsx'
 //routes

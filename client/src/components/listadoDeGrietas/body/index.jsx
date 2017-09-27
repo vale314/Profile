@@ -4,7 +4,7 @@ import HeaderComponent from './component.jsx'
 
 
 
-class Body extends React.Component {
+class Listado extends React.Component {
     constructor(props){
         super(props)
 
@@ -24,4 +24,4 @@ class Body extends React.Component {
     }
 }
 
-export default Body;
+export default Listado;

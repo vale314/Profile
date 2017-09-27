@@ -9,6 +9,6 @@ import reducer from "./combineReducers/index"
 
 const middleware = applyMiddleware(promise(), thunk, logger)
 
-const state = localStorage.getItem('reduxState') ? localStorage.getItem('reduxState') : {};
+const state = localStorage.getItem('reduxState') ? JSON.parse(localStorage.getItem('reduxState')) : {};
 
 export default createStore(reducer, state, middleware)

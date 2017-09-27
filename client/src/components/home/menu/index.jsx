@@ -5,7 +5,8 @@ import {OPEN} from '../../actions/open'
 import {ROUTE} from '../../actions/routes.js'
 @connect((store)=>{
     return{
-        open:store.home.open
+        open:store.home.open,
+        authenticated:store.authenticated.authenticate
     }
 })
 
@@ -16,7 +17,7 @@ class Menu extends React.Component {
         this.handleClickRoute = this.handleClickRoute.bind(this);
     }
     componentWillMount(){
-
+        console.log(this.props.authenticated)
     }
     
 
@@ -26,6 +27,8 @@ class Menu extends React.Component {
 
     handleClickRoute(e){
         this.props.dispatch(ROUTE(e,this.props))
+        if(e == `/login`)
+            this.props.dispatch(OPEN())
     }
 
     
@@ -33,7 +36,9 @@ class Menu extends React.Component {
 
     render(){
         return(
-            <MenuComponent handleClick={this.handleClick} open={this.props.open} handleClickRoute={this.handleClickRoute}/>
+            <MenuComponent handleClick={this.handleClick} open={this.props.open} handleClickRoute={this.handleClickRoute} 
+                authenticated={this.props.authenticated}
+            />
         )
     }
 }

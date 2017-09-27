@@ -9,6 +9,7 @@ export function ROUTE(route,props) {
                return
            }
         dispatch(OPEN())
+        localStorage.setItem('reduxState',JSON.stringify(getState()))
            
    }
  }
