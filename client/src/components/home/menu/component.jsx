@@ -28,7 +28,7 @@ const MenuComponent=({
                 <Avatar size='100'
                   alt="Avatar" src="https://pbs.twimg.com/profile_images/425000350202867713/omeMN2VM.jpeg" />
           </ListItem>
-          <ListItemText style={{textAlign:'center'}} primary="Yessica"/>
+          <ListItemText style={{textAlign:'center'}} primary="First"/>
          </div> 
         : 
         <div style={{textAlign:'center', marginTop:'25%', marginBottom:'25%'}}> 
