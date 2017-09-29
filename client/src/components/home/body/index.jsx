@@ -23,7 +23,7 @@ class Images extends React.Component {
 
     componentWillMount(){
         this.titleChangeFunction()
-
+        
     }
 
     titleChangeFunction(){

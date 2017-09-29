@@ -1,0 +1,42 @@
+import React from 'react';
+import * as Semantic  from 'semantic-ui-react'
+
+
+const HeaderComponent = ({
+    items
+}) => (
+    <div style={{textAlign:'center', textAlign:'-webkit-center'}}>
+                <Semantic.Card.Group style={{textAlign:'center', textAlign:'-webkit-center',paddingLeft:'15%', paddingRight:'15%', width:`${window.innerWidth}px`}}>
+        {items.map((value,index)=>{
+            return(
+                    <Semantic.Card key={index}  style={{textAlign:'center', textAlign:'-webkit-center'}} >
+                        <Semantic.Image src='https://i.ytimg.com/vi/6-MAPOFshM0/hqdefault.jpg' />
+                        <Semantic.Card.Content>
+                        <Semantic.Card.Header>
+                            Matthew
+                        </Semantic.Card.Header>
+                        <Semantic.Card.Meta>
+                            <span className='date'>
+                            Joined in 2015
+                            </span>
+                        </Semantic.Card.Meta>
+                        <Semantic.Card.Description>
+                            Matthew is a musician living in Nashville.
+                        </Semantic.Card.Description>
+                        </Semantic.Card.Content>
+                        <Semantic.Card.Content extra>
+                        <a>
+                            <Semantic.Icon name='user' />
+                            22 Friends
+                        </a>
+                        </Semantic.Card.Content>
+                    </Semantic.Card>
+            )
+            
+        })}
+                </Semantic.Card.Group>    
+        
+    </div>  
+);
+
+export default HeaderComponent;

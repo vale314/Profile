@@ -2,12 +2,11 @@ import {OPEN} from './open'
 import {ROUTE} from './routes'
 
 
-export function DEAUTHENTICATED(props) {
+export function DEAUTHENTICATED(route,props) {
     
-       return function(dispatch,getState){
-    
+        return function(dispatch,getState){
                dispatch({type:'DEAUTHENTICATE'})
-               dispatch(ROUTE('/',props))
+               dispatch(ROUTE(route,props))
                localStorage.setItem('reduxState',JSON.stringify(getState()))
                
        }

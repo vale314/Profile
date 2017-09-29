@@ -33,7 +33,7 @@ class Header extends React.Component {
     }
     
     deauthenticated(){
-        this.props.dispatch(DEAUTHENTICATED(this.props))
+        this.props.dispatch(DEAUTHENTICATED('/' ,this.props))
     }
 
 

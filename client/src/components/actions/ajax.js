@@ -1,6 +1,6 @@
 import {DEAUTHENTICATED} from './auth'
 
-export function AJAX(props) {
+export function AJAX(route,props) {
 
    return function(dispatch,getState){
 
@@ -10,7 +10,7 @@ export function AJAX(props) {
         return
     }
    
-    dispatch(DEAUTHENTICATED(props))
+    dispatch(DEAUTHENTICATED(route,props))
     localStorage.setItem('reduxState',JSON.stringify(getState()))
    
     }

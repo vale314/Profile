@@ -1,16 +1,30 @@
 import React from 'react'
-import HeaderComponent from './component.jsx'
-
+import Component from './body.jsx'
+import Header from './header.jsx'
 
 
 
 class Listado extends React.Component {
     constructor(props){
         super(props)
-
+        this.state={
+            items:[
+                'manzana',
+                'melon',
+                'papaya',
+                'platano',
+                'fresas',
+                'manzana',
+                'melon',
+                'papaya',
+                'platano',
+                'fresas'
+            ]
+        }
     }
 
     componentWillMount(){
+        console.log('Valentine')
 
     }
 
@@ -19,7 +33,10 @@ class Listado extends React.Component {
 
     render(){
         return(
-            <HeaderComponent />
+            <div>
+                <Header />
+                <Component items={this.state.items} />
+            </div>    
         )
     }
 }
