@@ -1,10 +1,24 @@
-.div {
-  background-image: url(http://ppcdn.500px.org/75319705/1991f76c0c6a91ae1d23eb94ac5c7a9f7e79c480/2048.jpg);
+.divMenuButton {
+  text-align: center;
+  margin-top: 25%;
+  margin-bottom: 25%; }
+.divLoginHeader {
+  text-align: center;
+  margin: auto; }
+.divHome {
+  background-image: url(https://inassets1-internationsgmbh.netdna-ssl.com/image/static_2048_1152/static/bundles/internationsseo/frontend/images/localcommunityHero/72.jpg);
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
-  width: 100%;
-  height: -webkit-fill-available; }
+  background-color: #999;
+  height: -webkit-fill-available;
+  padding-top: 9%; }
+.divImage {
+  text-align: center;
+  text-align: -webkit-center; }
+
+.divFiltros {
+  margin-bottom: 3%; }
 
 /*# sourceMappingURL=bundle.css.map*/

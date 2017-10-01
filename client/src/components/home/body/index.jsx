@@ -31,9 +31,10 @@ class Images extends React.Component {
         var cambio = mexico.split('')
         var index = 0
         const intervalTitle = setInterval(()=>{ 
-
-            if(cambio[index] == null || cambio[index] == undefined){
+            
+            if(cambio[index] == null || cambio[index] == undefined || this.props.history.location.pathname != `/`){
                 clearInterval(intervalTitle)
+                return
             }
             if(cambio[index] !== undefined){
                 this.setState({

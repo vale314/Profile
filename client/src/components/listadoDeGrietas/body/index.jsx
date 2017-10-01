@@ -9,16 +9,16 @@ class Listado extends React.Component {
         super(props)
         this.state={
             items:[
-                'manzana',
-                'melon',
-                'papaya',
-                'platano',
-                'fresas',
-                'manzana',
-                'melon',
-                'papaya',
-                'platano',
-                'fresas'
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {}
             ]
         }
     }

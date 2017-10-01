@@ -7,7 +7,7 @@ import MenuIcon from 'material-ui-icons/Menu';
 import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
 import Button from 'material-ui/Button';
-
+import styles from './style.css'
 
 const MenuComponent=({
     handleClick,
@@ -31,7 +31,7 @@ const MenuComponent=({
           <ListItemText style={{textAlign:'center'}} primary="First"/>
          </div> 
         : 
-        <div style={{textAlign:'center', marginTop:'25%', marginBottom:'25%'}}> 
+        <div className='divMenuButton'> 
           <Button raised color="primary" onClick={()=>handleClickRoute('/login')} >
             Login
           </Button>

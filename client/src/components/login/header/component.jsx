@@ -5,13 +5,14 @@ import Typography from 'material-ui/Typography';
 import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui-icons/Menu';
 import Button from 'material-ui/Button';
+import style from './style.css'
 
 const HeaderComponent = ({
     handleClickRoute
 }) => (
     <div >
             <Toolbar>
-                <div style={{textAlign:'center', margin:'auto'}}>  
+                <div className="divLoginHeader">  
                     <Typography type="title" color="inherit" noWrap onClick={()=>handleClickRoute(`/`)} >
                         Revisa Mi Grieta
                     </Typography>

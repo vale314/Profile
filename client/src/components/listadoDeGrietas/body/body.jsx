@@ -1,11 +1,13 @@
 import React from 'react';
 import * as Semantic  from 'semantic-ui-react'
-
+import Filtros from './filtros.jsx'
+import styles from './style.css'
 
 const HeaderComponent = ({
     items
 }) => (
-    <div style={{textAlign:'center', textAlign:'-webkit-center'}}>
+    <div className='divImage'>
+                <Filtros />
                 <Semantic.Card.Group style={{textAlign:'center', textAlign:'-webkit-center',paddingLeft:'15%', paddingRight:'15%', width:`${window.innerWidth}px`}}>
         {items.map((value,index)=>{
             return(

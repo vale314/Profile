@@ -17,7 +17,7 @@ class Menu extends React.Component {
         this.handleClickRoute = this.handleClickRoute.bind(this);
     }
     componentWillMount(){
-        console.log(this.props.authenticated)
+
     }
     
 
