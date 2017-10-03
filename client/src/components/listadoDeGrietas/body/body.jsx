@@ -4,10 +4,12 @@ import Filtros from './filtros.jsx'
 import styles from './style.css'
 
 const HeaderComponent = ({
-    items
+    items,
+    filters,
+    handleChange
 }) => (
     <div className='divImage'>
-                <Filtros />
+                <Filtros filters={filters} handleChange={handleChange} />
                 <Semantic.Card.Group style={{textAlign:'center', textAlign:'-webkit-center',paddingLeft:'15%', paddingRight:'15%', width:`${window.innerWidth}px`}}>
         {items.map((value,index)=>{
             return(

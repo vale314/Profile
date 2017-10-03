@@ -7,14 +7,20 @@ import { FormControl, FormHelperText } from 'material-ui/Form';
 import Select from 'material-ui/Select';
 import styles from './style.css'
 
-const filtros = ({})=>(
+const filtros = ({
+    filters,
+    handleChange
+})=>(
     <div className='divFiltros'>
     <form  autoComplete="off">
     <FormControl style={{marginRight:'15px'}}>
-    <InputLabel htmlFor="age-simple">Gravedad</InputLabel>
+    <InputLabel htmlFor="Gravedad">Gravedad</InputLabel>
     <Select
-        value={'18'}
-        input={<Input id="age-simple" />}
+        value={filters.gravedad}
+
+        onChange={(e)=>handleChange(e,'gravedad')}
+        input={<Input id="Gravedad" />
+        }
     >
         <MenuItem value="">
         <em>None</em>
