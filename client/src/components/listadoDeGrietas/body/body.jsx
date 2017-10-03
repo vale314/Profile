@@ -6,10 +6,11 @@ import styles from './style.css'
 const HeaderComponent = ({
     items,
     filters,
-    handleChange
+    handleChange,
+    busqueda
 }) => (
     <div className='divImage'>
-                <Filtros filters={filters} handleChange={handleChange} />
+                <Filtros filters={filters} handleChange={handleChange} busqueda={busqueda} />
                 <Semantic.Card.Group style={{textAlign:'center', textAlign:'-webkit-center',paddingLeft:'15%', paddingRight:'15%', width:`${window.innerWidth}px`}}>
         {items.map((value,index)=>{
             return(

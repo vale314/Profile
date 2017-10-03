@@ -84150,7 +84150,7 @@ exports.default = MenuComponent;
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -84176,96 +84176,257 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Listado = function (_React$Component) {
-    _inherits(Listado, _React$Component);
+  _inherits(Listado, _React$Component);
 
-    function Listado(props) {
-        _classCallCheck(this, Listado);
+  function Listado(props) {
+    _classCallCheck(this, Listado);
 
-        var _this = _possibleConstructorReturn(this, (Listado.__proto__ || Object.getPrototypeOf(Listado)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (Listado.__proto__ || Object.getPrototypeOf(Listado)).call(this, props));
 
-        _this.state = {
-            items: [{
-                "comentario": "La verdad Se Encuentra En Muy Mal",
-                "createdOn": "0 de mes año",
-                "diagonalesLosa": "true",
-                "diagonalesPiso": "false",
-                "gravedad": "baja",
-                "tipoGrieta": 'ambas',
-                "tipoHogar": "casa",
-                "domicilio": "xxxxx",
-                "estadoDeObra": {
-                    "desplomes": "true",
-                    "desprendimiento": "true",
-                    "golpeteo": "true",
-                    "hundimientos": "true",
-                    "mas20porciento": "true",
-                    "pisosHuecos": "true",
-                    "vibraciones": "true"
-                },
-                "files": ["string"],
-                "geolocalizacion": {
-                    "latitude": 50.55,
-                    "longitude": 40.9
-                },
-                "id": 6546546546546546546,
-                "modifiedOn": "0 de mes año",
-                "paralelasPiso": "true",
-                "revisada": "true",
-                "revisiones": [{
-                    "comentarios": "esta muy mal",
-                    "createdOn": "0 de mes año",
-                    "diagonalesLosa": "true",
-                    "diagonalesPiso": "true",
-                    "modifiedOn": "0 de mes año",
-                    "paralelasPiso": "true",
-                    "peligroInminente": "true",
-                    "revisadaPor": "Valentine"
-                }],
-                "tweet": "string",
-                "userId": "valentine"
-            }],
-            filters: {
-                gravedad: 10,
-                tipoGrieta: '',
-                tipoHogar: '',
-                domicilio: ''
-            }
+    _this.state = {
+      items: [{
+        "comentario": "La verdad Se Encuentra En Muy Mal",
+        "createdOn": "0 de mes año",
+        "diagonalesLosa": "true",
+        "diagonalesPiso": "false",
+        "filters": {
+          "gravedad": "Baja",
+          "tipoGrieta": 'Ambas',
+          "tipoHogar": "Casa",
+          "domicilio": "xxxxx",
+          "tamaño": "Chica"
+        },
 
-        };
-        _this.handleChange = _this.handleChange.bind(_this);
-        return _this;
+        "estadoDeObra": {
+          "desplomes": "true",
+          "desprendimiento": "true",
+          "golpeteo": "true",
+          "hundimientos": "true",
+          "mas20porciento": "true",
+          "pisosHuecos": "true",
+          "vibraciones": "true"
+        },
+        "files": ["string"],
+        "geolocalizacion": {
+          "latitude": 50.55,
+          "longitude": 40.9
+        },
+        "id": 6546546546546546546,
+        "modifiedOn": "0 de mes año",
+        "paralelasPiso": "true",
+        "revisada": "true",
+        "revisiones": [{
+          "comentarios": "esta muy mal",
+          "createdOn": "0 de mes año",
+          "diagonalesLosa": "true",
+          "diagonalesPiso": "true",
+          "modifiedOn": "0 de mes año",
+          "paralelasPiso": "true",
+          "peligroInminente": "true",
+          "revisadaPor": "Valentine"
+        }],
+        "tweet": "string",
+        "userId": "valentine"
+      }, {
+        "comentario": "La verdad Se Encuentra En Muy Mal",
+        "createdOn": "0 de mes año",
+        "diagonalesLosa": "true",
+        "diagonalesPiso": "false",
+        "filters": {
+          "gravedad": "Media",
+          "tipoGrieta": 'Ambas',
+          "tipoHogar": "Edificio",
+          "domicilio": "yyyyy",
+          "tamaño": "Chica"
+        },
+
+        "estadoDeObra": {
+          "desplomes": "true",
+          "desprendimiento": "true",
+          "golpeteo": "true",
+          "hundimientos": "true",
+          "mas20porciento": "true",
+          "pisosHuecos": "true",
+          "vibraciones": "true"
+        },
+        "files": ["string"],
+        "geolocalizacion": {
+          "latitude": 50.55,
+          "longitude": 40.9
+        },
+        "id": 6546546546546546546,
+        "modifiedOn": "0 de mes año",
+        "paralelasPiso": "true",
+        "revisada": "true",
+        "revisiones": [{
+          "comentarios": "esta muy mal",
+          "createdOn": "0 de mes año",
+          "diagonalesLosa": "true",
+          "diagonalesPiso": "true",
+          "modifiedOn": "0 de mes año",
+          "paralelasPiso": "true",
+          "peligroInminente": "true",
+          "revisadaPor": "Valentine"
+        }],
+        "tweet": "string",
+        "userId": "valentine"
+      }, {
+        "comentario": "La verdad Se Encuentra En Muy Mal",
+        "createdOn": "0 de mes año",
+        "diagonalesLosa": "true",
+        "diagonalesPiso": "false",
+        "filters": {
+          "gravedad": "Alta",
+          "tipoGrieta": 'Interna',
+          "tipoHogar": "Casa",
+          "domicilio": "wwwww",
+          "tamaño": "Grande"
+        },
+
+        "estadoDeObra": {
+          "desplomes": "true",
+          "desprendimiento": "true",
+          "golpeteo": "true",
+          "hundimientos": "true",
+          "mas20porciento": "true",
+          "pisosHuecos": "true",
+          "vibraciones": "true"
+        },
+        "files": ["string"],
+        "geolocalizacion": {
+          "latitude": 50.55,
+          "longitude": 40.9
+        },
+        "id": 6546546546546546546,
+        "modifiedOn": "0 de mes año",
+        "paralelasPiso": "true",
+        "revisada": "true",
+        "revisiones": [{
+          "comentarios": "esta muy mal",
+          "createdOn": "0 de mes año",
+          "diagonalesLosa": "true",
+          "diagonalesPiso": "true",
+          "modifiedOn": "0 de mes año",
+          "paralelasPiso": "true",
+          "peligroInminente": "true",
+          "revisadaPor": "Valentine"
+        }],
+        "tweet": "string",
+        "userId": "valentine"
+      }, {
+        "comentario": "La verdad Se Encuentra En Muy Mal",
+        "createdOn": "0 de mes año",
+        "diagonalesLosa": "true",
+        "diagonalesPiso": "false",
+        "filters": {
+          "gravedad": "Alta",
+          "tipoGrieta": 'Ambas',
+          "tipoHogar": "Terreno",
+          "domicilio": "aaaaa",
+          "tamaño": "Media"
+        },
+
+        "estadoDeObra": {
+          "desplomes": "true",
+          "desprendimiento": "true",
+          "golpeteo": "true",
+          "hundimientos": "true",
+          "mas20porciento": "true",
+          "pisosHuecos": "true",
+          "vibraciones": "true"
+        },
+        "files": ["string"],
+        "geolocalizacion": {
+          "latitude": 50.55,
+          "longitude": 40.9
+        },
+        "id": 6546546546546546546,
+        "modifiedOn": "0 de mes año",
+        "paralelasPiso": "true",
+        "revisada": "true",
+        "revisiones": [{
+          "comentarios": "esta muy mal",
+          "createdOn": "0 de mes año",
+          "diagonalesLosa": "true",
+          "diagonalesPiso": "true",
+          "modifiedOn": "0 de mes año",
+          "paralelasPiso": "true",
+          "peligroInminente": "true",
+          "revisadaPor": "Valentine"
+        }],
+        "tweet": "string",
+        "userId": "valentine"
+      }],
+      filters: {
+        gravedad: '',
+        tipoGrieta: '',
+        tipoHogar: '',
+        domicilio: '',
+        tamaño: ''
+      }
+
+    };
+    _this.handleChange = _this.handleChange.bind(_this);
+    _this.busqueda = _this.busqueda.bind(_this);
+    return _this;
+  }
+
+  _createClass(Listado, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      console.log('Valentine');
     }
+  }, {
+    key: 'handleChange',
+    value: function handleChange(e, name) {
+      var state = this.state.filters;
+      var value = e.target.value;
+      state[name] = value;
+      this.setState({
+        state: state
+      });
+    }
+  }, {
+    key: 'busqueda',
+    value: function busqueda() {
+      var items = this.state.items;
+      var filters = this.state.filters;
+      var check = false;
+      var busqueda = [];
+      items.map(function (e) {
 
-    _createClass(Listado, [{
-        key: 'componentWillMount',
-        value: function componentWillMount() {
-            console.log('Valentine');
-        }
-    }, {
-        key: 'handleChange',
-        value: function handleChange(e, name) {
-            var state = this.state.filters;
-            var value = e.target.value;
-            console.log(state);
-            console.log(value);
-            console.log(name);
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            return _react2.default.createElement(
-                'div',
-                null,
-                _react2.default.createElement(_header2.default, null),
-                _react2.default.createElement(_body2.default, { items: this.state.items,
-                    handleChange: this.handleChange,
-                    filters: this.state.filters
-                })
-            );
-        }
-    }]);
+        check = false;
 
-    return Listado;
+        if ((filters.gravedad == e.filters.gravedad || filters.gravedad == '') && (filters.domicilio == e.filters.domicilio || filters.domicilio == '') && (filters.tamaño == e.filters.tamaño || filters.tamaño == '') && (filters.tipoGrieta == e.filters.tipoGrieta || filters.tipoGrieta == '') && (filters.tipoHogar == e.filters.tipoHogar || filters.tipoHogar == '')) {
+          check = true;
+        }
+
+        if (JSON.stringify(e.filters) == JSON.stringify(filters) || check) {
+          busqueda.push(e);
+        }
+      });
+
+      this.setState({
+        items: busqueda
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(_header2.default, null),
+        _react2.default.createElement(_body2.default, { items: this.state.items,
+          handleChange: this.handleChange,
+          filters: this.state.filters,
+          busqueda: this.busqueda
+        })
+      );
+    }
+  }]);
+
+  return Listado;
 }(_react2.default.Component);
 
 exports.default = Listado;
@@ -84308,11 +84469,12 @@ var HeaderComponent = function HeaderComponent(_ref) {
 
     var items = _ref.items,
         filters = _ref.filters,
-        handleChange = _ref.handleChange;
+        handleChange = _ref.handleChange,
+        busqueda = _ref.busqueda;
     return _react2.default.createElement(
         'div',
         { className: 'divImage' },
-        _react2.default.createElement(_filtros2.default, { filters: filters, handleChange: handleChange }),
+        _react2.default.createElement(_filtros2.default, { filters: filters, handleChange: handleChange, busqueda: busqueda }),
         _react2.default.createElement(
             Semantic.Card.Group,
             { style: (_ref2 = { textAlign: 'center' }, _defineProperty(_ref2, 'textAlign', '-webkit-center'), _defineProperty(_ref2, 'paddingLeft', '15%'), _defineProperty(_ref2, 'paddingRight', '15%'), _defineProperty(_ref2, 'width', window.innerWidth + 'px'), _ref2) },
@@ -84399,11 +84561,16 @@ var _style = __webpack_require__(559);
 
 var _style2 = _interopRequireDefault(_style);
 
+var _Button = __webpack_require__(186);
+
+var _Button2 = _interopRequireDefault(_Button);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var filtros = function filtros(_ref) {
     var filters = _ref.filters,
-        handleChange = _ref.handleChange;
+        handleChange = _ref.handleChange,
+        busqueda = _ref.busqueda;
     return _react2.default.createElement(
         'div',
         { className: 'divFiltros' },
@@ -84439,17 +84606,17 @@ var filtros = function filtros(_ref) {
                     ),
                     _react2.default.createElement(
                         _Menu.MenuItem,
-                        { value: 10 },
+                        { value: 'Baja' },
                         'Baja'
                     ),
                     _react2.default.createElement(
                         _Menu.MenuItem,
-                        { value: 20 },
+                        { value: 'Media' },
                         'Media'
                     ),
                     _react2.default.createElement(
                         _Menu.MenuItem,
-                        { value: 30 },
+                        { value: 'Alta' },
                         'Alta'
                     )
                 ),
@@ -84470,7 +84637,11 @@ var filtros = function filtros(_ref) {
                 _react2.default.createElement(
                     _Select2.default,
                     {
-                        value: '18',
+                        value: filters.tipoGrieta,
+
+                        onChange: function onChange(e) {
+                            return handleChange(e, 'tipoGrieta');
+                        },
                         input: _react2.default.createElement(_Input2.default, { id: 'age-helper' })
                     },
                     _react2.default.createElement(
@@ -84484,17 +84655,17 @@ var filtros = function filtros(_ref) {
                     ),
                     _react2.default.createElement(
                         _Menu.MenuItem,
-                        { value: 10 },
+                        { value: 'Interna' },
                         'Interna'
                     ),
                     _react2.default.createElement(
                         _Menu.MenuItem,
-                        { value: 20 },
+                        { value: 'Externa' },
                         'Externa'
                     ),
                     _react2.default.createElement(
                         _Menu.MenuItem,
-                        { value: 30 },
+                        { value: 'Ambas' },
                         'Ambas'
                     )
                 )
@@ -84510,7 +84681,11 @@ var filtros = function filtros(_ref) {
                 _react2.default.createElement(
                     _Select2.default,
                     {
-                        value: '18',
+                        value: filters.tipoHogar,
+
+                        onChange: function onChange(e) {
+                            return handleChange(e, 'tipoHogar');
+                        },
                         input: _react2.default.createElement(_Input2.default, { id: 'name-error' })
                     },
                     _react2.default.createElement(
@@ -84524,17 +84699,17 @@ var filtros = function filtros(_ref) {
                     ),
                     _react2.default.createElement(
                         _Menu.MenuItem,
-                        { value: 'hai' },
+                        { value: 'Edificio' },
                         'Edificio'
                     ),
                     _react2.default.createElement(
                         _Menu.MenuItem,
-                        { value: 'olivier' },
+                        { value: 'Terreno' },
                         'Terreno'
                     ),
                     _react2.default.createElement(
                         _Menu.MenuItem,
-                        { value: 'kevin' },
+                        { value: 'Casa' },
                         'Casa'
                     )
                 ),
@@ -84552,7 +84727,9 @@ var filtros = function filtros(_ref) {
                     { htmlFor: 'name-input' },
                     'Busqueda'
                 ),
-                _react2.default.createElement(_Input2.default, { id: 'name-input' }),
+                _react2.default.createElement(_Input2.default, { id: 'name-input', value: filters.domicilio, onChange: function onChange(e) {
+                        return handleChange(e, 'domicilio');
+                    } }),
                 _react2.default.createElement(
                     _Form.FormHelperText,
                     null,
@@ -84570,8 +84747,11 @@ var filtros = function filtros(_ref) {
                 _react2.default.createElement(
                     _Select2.default,
                     {
-                        value: '18',
-                        input: _react2.default.createElement(_Input2.default, { id: 'name-readonly' })
+                        value: filters.tamaño,
+                        onChange: function onChange(e) {
+                            return handleChange(e, 'tamaño');
+                        },
+                        input: _react2.default.createElement(_Input2.default, { id: 'age-helper' })
                     },
                     _react2.default.createElement(
                         _Menu.MenuItem,
@@ -84584,17 +84764,17 @@ var filtros = function filtros(_ref) {
                     ),
                     _react2.default.createElement(
                         _Menu.MenuItem,
-                        { value: 'hai' },
+                        { value: 'Chica' },
                         'Chica'
                     ),
                     _react2.default.createElement(
                         _Menu.MenuItem,
-                        { value: 'olivier' },
+                        { value: 'Media' },
                         'Media'
                     ),
                     _react2.default.createElement(
                         _Menu.MenuItem,
-                        { value: 'kevin' },
+                        { value: 'Grande' },
                         'Grande'
                     )
                 ),
@@ -84603,6 +84783,11 @@ var filtros = function filtros(_ref) {
                     null,
                     'Read only'
                 )
+            ),
+            _react2.default.createElement(
+                _Button2.default,
+                { raised: true, color: 'accent', onClick: busqueda },
+                'Accent'
             )
         )
     );

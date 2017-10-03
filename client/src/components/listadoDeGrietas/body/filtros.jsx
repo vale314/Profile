@@ -6,10 +6,13 @@ import { MenuItem } from 'material-ui/Menu';
 import { FormControl, FormHelperText } from 'material-ui/Form';
 import Select from 'material-ui/Select';
 import styles from './style.css'
+import Button from 'material-ui/Button';
+
 
 const filtros = ({
     filters,
-    handleChange
+    handleChange,
+    busqueda
 })=>(
     <div className='divFiltros'>
     <form  autoComplete="off">
@@ -25,61 +28,69 @@ const filtros = ({
         <MenuItem value="">
         <em>None</em>
         </MenuItem>
-        <MenuItem value={10}>Baja</MenuItem>
-        <MenuItem value={20}>Media</MenuItem>
-        <MenuItem value={30}>Alta</MenuItem>
+        <MenuItem value='Baja'>Baja</MenuItem>
+        <MenuItem value='Media'>Media</MenuItem>
+        <MenuItem value='Alta'>Alta</MenuItem>
     </Select>
     <FormHelperText>Baja, Media y Alta</FormHelperText>
     </FormControl>
     <FormControl style={{marginRight:'15px'}}>
     <InputLabel htmlFor="age-helper">Tipo</InputLabel>
     <Select
-        value={'18'}
+        value={filters.tipoGrieta}
+
+        onChange={(e)=>handleChange(e,'tipoGrieta')}
         input={<Input id="age-helper" />}
     >
         <MenuItem value="Ambas">
         <em>None</em>
         </MenuItem>
-        <MenuItem value={10}>Interna</MenuItem>
-        <MenuItem value={20}>Externa</MenuItem>
-        <MenuItem value={30}>Ambas</MenuItem>
+        <MenuItem value='Interna'>Interna</MenuItem>
+        <MenuItem value='Externa'>Externa</MenuItem>
+        <MenuItem value='Ambas'>Ambas</MenuItem>
     </Select>
     </FormControl>
     <FormControl style={{marginRight:'15px'}}>
     <InputLabel htmlFor="name-error">Hogar</InputLabel>
     <Select
-        value={'18'}
+        value={filters.tipoHogar}
+
+        onChange={(e)=>handleChange(e,'tipoHogar')}
         input={<Input id="name-error" />}
     >
         <MenuItem value="">
         <em>None</em>
         </MenuItem>
-        <MenuItem value="hai">Edificio</MenuItem>
-        <MenuItem value="olivier">Terreno</MenuItem>
-        <MenuItem value="kevin">Casa</MenuItem>
+        <MenuItem value="Edificio">Edificio</MenuItem>
+        <MenuItem value="Terreno">Terreno</MenuItem>
+        <MenuItem value="Casa">Casa</MenuItem>
     </Select>
     <FormHelperText>Tipo De Vivienda</FormHelperText>
     </FormControl>
     <FormControl style={{marginRight:'15px'}}>
     <InputLabel htmlFor="name-input">Busqueda</InputLabel>
-    <Input id="name-input" />
+    <Input id="name-input" value={filters.domicilio} onChange={(e)=>handleChange(e,'domicilio')} />
     <FormHelperText>Domicilio</FormHelperText>
     </FormControl>
     <FormControl style={{marginRight:'15px'}}>
     <InputLabel htmlFor="name-readonly">Tamaño</InputLabel>
     <Select
-        value={'18'}
-        input={<Input id="name-readonly" />}
+        value={filters.tamaño}
+        onChange={(e)=>handleChange(e,'tamaño')}
+        input={<Input id="age-helper" />}
     >
         <MenuItem value="">
         <em>None</em>
         </MenuItem>
-        <MenuItem value="hai">Chica</MenuItem>
-        <MenuItem value="olivier">Media</MenuItem>
-        <MenuItem value="kevin">Grande</MenuItem>
+        <MenuItem value="Chica">Chica</MenuItem>
+        <MenuItem value="Media">Media</MenuItem>
+        <MenuItem value="Grande">Grande</MenuItem>
     </Select>
     <FormHelperText>Read only</FormHelperText>
     </FormControl>
+    <Button raised color="accent" onClick={busqueda} >
+        Accent
+      </Button>
 </form>
 </div>
 )
