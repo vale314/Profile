@@ -42,7 +42,7 @@ const filtros = ({
         onChange={(e)=>handleChange(e,'tipoGrieta')}
         input={<Input id="age-helper" />}
     >
-        <MenuItem value="Ambas">
+        <MenuItem value="">
         <em>None</em>
         </MenuItem>
         <MenuItem value='Interna'>Interna</MenuItem>
@@ -88,7 +88,7 @@ const filtros = ({
     </Select>
     <FormHelperText>Read only</FormHelperText>
     </FormControl>
-    <Button raised color="accent" onClick={busqueda} >
+    <Button raised color="accent" onClick={()=>busqueda(true)} >
         Accent
       </Button>
 </form>

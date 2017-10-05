@@ -4,9 +4,15 @@ import Header from './header.jsx'
 import {connect} from 'react-redux'
 import {SCROLL} from './actions/scroll.js'
 
+import {FILTERS} from './actions/filters.js'
+
+//(ajax) GET
+import {getGrietas} from './actions/get'
+
 @connect((store)=>{
   return{
-    scroll: store.scroll.scroll
+    scroll: store.scroll.scroll,
+    filters: store.filters.filters
   }
 })
 
@@ -14,345 +20,7 @@ class Listado extends React.Component {
     constructor(props){
         super(props)
         this.state={
-            items:[
-                {
-                    "comentario": "La verdad Se Encuentra En Muy Mal",
-                    "createdOn": "0 de mes año",
-                    "diagonalesLosa": "true",
-                    "diagonalesPiso": "false",
-                    "filters":{
-                        "gravedad":"Baja",
-                        "tipoGrieta":'Ambas',
-                        "tipoHogar":"Casa",
-                        "domicilio":"xxxxx",
-                        "tamaño":"Chica"
-                    },
-                    
-                    "estadoDeObra": {
-                      "desplomes": "true",
-                      "desprendimiento": "true",
-                      "golpeteo": "true",
-                      "hundimientos": "true",
-                      "mas20porciento": "true",
-                      "pisosHuecos": "true",
-                      "vibraciones": "true"
-                    },
-                    "files": [
-                      "string"
-                    ],
-                    "geolocalizacion": {
-                      "latitude": 50.55,
-                      "longitude": 40.9
-                    },
-                    "id": 6546546546546546546,
-                    "modifiedOn": "0 de mes año",
-                    "paralelasPiso": "true",
-                    "revisada": "true",
-                    "revisiones": [
-                      {
-                        "comentarios": "esta muy mal",
-                        "createdOn": "0 de mes año",
-                        "diagonalesLosa": "true",
-                        "diagonalesPiso": "true",
-                        "modifiedOn": "0 de mes año",
-                        "paralelasPiso": "true",
-                        "peligroInminente": "true",
-                        "revisadaPor": "Valentine"
-                      }
-                    ],
-                    "tweet": "string",
-                    "userId": "valentine"
-                  },
-                  {
-                    "comentario": "La verdad Se Encuentra En Muy Mal",
-                    "createdOn": "0 de mes año",
-                    "diagonalesLosa": "true",
-                    "diagonalesPiso": "false",
-                    "filters":{
-                        "gravedad":"Media",
-                        "tipoGrieta":'Ambas',
-                        "tipoHogar":"Edificio",
-                        "domicilio":"yyyyy",
-                        "tamaño":"Chica"
-                    },
-                    
-                    "estadoDeObra": {
-                      "desplomes": "true",
-                      "desprendimiento": "true",
-                      "golpeteo": "true",
-                      "hundimientos": "true",
-                      "mas20porciento": "true",
-                      "pisosHuecos": "true",
-                      "vibraciones": "true"
-                    },
-                    "files": [
-                      "string"
-                    ],
-                    "geolocalizacion": {
-                      "latitude": 50.55,
-                      "longitude": 40.9
-                    },
-                    "id": 6546546546546546546,
-                    "modifiedOn": "0 de mes año",
-                    "paralelasPiso": "true",
-                    "revisada": "true",
-                    "revisiones": [
-                      {
-                        "comentarios": "esta muy mal",
-                        "createdOn": "0 de mes año",
-                        "diagonalesLosa": "true",
-                        "diagonalesPiso": "true",
-                        "modifiedOn": "0 de mes año",
-                        "paralelasPiso": "true",
-                        "peligroInminente": "true",
-                        "revisadaPor": "Valentine"
-                      }
-                    ],
-                    "tweet": "string",
-                    "userId": "valentine"
-                  },
-                  {
-                    "comentario": "La verdad Se Encuentra En Muy Mal",
-                    "createdOn": "0 de mes año",
-                    "diagonalesLosa": "true",
-                    "diagonalesPiso": "false",
-                    "filters":{
-                        "gravedad":"Alta",
-                        "tipoGrieta":'Interna',
-                        "tipoHogar":"Casa",
-                        "domicilio":"wwwww",
-                        "tamaño":"Grande"
-                    },
-                    
-                    "estadoDeObra": {
-                      "desplomes": "true",
-                      "desprendimiento": "true",
-                      "golpeteo": "true",
-                      "hundimientos": "true",
-                      "mas20porciento": "true",
-                      "pisosHuecos": "true",
-                      "vibraciones": "true"
-                    },
-                    "files": [
-                      "string"
-                    ],
-                    "geolocalizacion": {
-                      "latitude": 50.55,
-                      "longitude": 40.9
-                    },
-                    "id": 6546546546546546546,
-                    "modifiedOn": "0 de mes año",
-                    "paralelasPiso": "true",
-                    "revisada": "true",
-                    "revisiones": [
-                      {
-                        "comentarios": "esta muy mal",
-                        "createdOn": "0 de mes año",
-                        "diagonalesLosa": "true",
-                        "diagonalesPiso": "true",
-                        "modifiedOn": "0 de mes año",
-                        "paralelasPiso": "true",
-                        "peligroInminente": "true",
-                        "revisadaPor": "Valentine"
-                      }
-                    ],
-                    "tweet": "string",
-                    "userId": "valentine"
-                  },{
-                    "comentario": "La verdad Se Encuentra En Muy Mal",
-                    "createdOn": "0 de mes año",
-                    "diagonalesLosa": "true",
-                    "diagonalesPiso": "false",
-                    "filters":{
-                        "gravedad":"Alta",
-                        "tipoGrieta":'Ambas',
-                        "tipoHogar":"Terreno",
-                        "domicilio":"aaaaa",
-                        "tamaño":"Media"
-                    },
-                    
-                    "estadoDeObra": {
-                      "desplomes": "true",
-                      "desprendimiento": "true",
-                      "golpeteo": "true",
-                      "hundimientos": "true",
-                      "mas20porciento": "true",
-                      "pisosHuecos": "true",
-                      "vibraciones": "true"
-                    },
-                    "files": [
-                      "string"
-                    ],
-                    "geolocalizacion": {
-                      "latitude": 50.55,
-                      "longitude": 40.9
-                    },
-                    "id": 6546546546546546546,
-                    "modifiedOn": "0 de mes año",
-                    "paralelasPiso": "true",
-                    "revisada": "true",
-                    "revisiones": [
-                      {
-                        "comentarios": "esta muy mal",
-                        "createdOn": "0 de mes año",
-                        "diagonalesLosa": "true",
-                        "diagonalesPiso": "true",
-                        "modifiedOn": "0 de mes año",
-                        "paralelasPiso": "true",
-                        "peligroInminente": "true",
-                        "revisadaPor": "Valentine"
-                      }
-                    ],
-                    "tweet": "string",
-                    "userId": "valentine"
-                  },
-                  {
-                    "comentario": "La verdad Se Encuentra En Muy Mal",
-                    "createdOn": "0 de mes año",
-                    "diagonalesLosa": "true",
-                    "diagonalesPiso": "false",
-                    "filters":{
-                        "gravedad":"Alta",
-                        "tipoGrieta":'Ambas',
-                        "tipoHogar":"Terreno",
-                        "domicilio":"aaaaa",
-                        "tamaño":"Media"
-                    },
-                    
-                    "estadoDeObra": {
-                      "desplomes": "true",
-                      "desprendimiento": "true",
-                      "golpeteo": "true",
-                      "hundimientos": "true",
-                      "mas20porciento": "true",
-                      "pisosHuecos": "true",
-                      "vibraciones": "true"
-                    },
-                    "files": [
-                      "string"
-                    ],
-                    "geolocalizacion": {
-                      "latitude": 50.55,
-                      "longitude": 40.9
-                    },
-                    "id": 6546546546546546546,
-                    "modifiedOn": "0 de mes año",
-                    "paralelasPiso": "true",
-                    "revisada": "true",
-                    "revisiones": [
-                      {
-                        "comentarios": "esta muy mal",
-                        "createdOn": "0 de mes año",
-                        "diagonalesLosa": "true",
-                        "diagonalesPiso": "true",
-                        "modifiedOn": "0 de mes año",
-                        "paralelasPiso": "true",
-                        "peligroInminente": "true",
-                        "revisadaPor": "Valentine"
-                      }
-                    ],
-                    "tweet": "string",
-                    "userId": "valentine"
-                  },
-                  {
-                    "comentario": "La verdad Se Encuentra En Muy Mal",
-                    "createdOn": "0 de mes año",
-                    "diagonalesLosa": "true",
-                    "diagonalesPiso": "false",
-                    "filters":{
-                        "gravedad":"Alta",
-                        "tipoGrieta":'Ambas',
-                        "tipoHogar":"Terreno",
-                        "domicilio":"aaaaa",
-                        "tamaño":"Media"
-                    },
-                    
-                    "estadoDeObra": {
-                      "desplomes": "true",
-                      "desprendimiento": "true",
-                      "golpeteo": "true",
-                      "hundimientos": "true",
-                      "mas20porciento": "true",
-                      "pisosHuecos": "true",
-                      "vibraciones": "true"
-                    },
-                    "files": [
-                      "string"
-                    ],
-                    "geolocalizacion": {
-                      "latitude": 50.55,
-                      "longitude": 40.9
-                    },
-                    "id": 6546546546546546546,
-                    "modifiedOn": "0 de mes año",
-                    "paralelasPiso": "true",
-                    "revisada": "true",
-                    "revisiones": [
-                      {
-                        "comentarios": "esta muy mal",
-                        "createdOn": "0 de mes año",
-                        "diagonalesLosa": "true",
-                        "diagonalesPiso": "true",
-                        "modifiedOn": "0 de mes año",
-                        "paralelasPiso": "true",
-                        "peligroInminente": "true",
-                        "revisadaPor": "Valentine"
-                      }
-                    ],
-                    "tweet": "string",
-                    "userId": "valentine"
-                  },
-                  {
-                    "comentario": "La verdad Se Encuentra En Muy Mal",
-                    "createdOn": "0 de mes año",
-                    "diagonalesLosa": "true",
-                    "diagonalesPiso": "false",
-                    "filters":{
-                        "gravedad":"Alta",
-                        "tipoGrieta":'Ambas',
-                        "tipoHogar":"Terreno",
-                        "domicilio":"aaaaa",
-                        "tamaño":"Media"
-                    },
-                    
-                    "estadoDeObra": {
-                      "desplomes": "true",
-                      "desprendimiento": "true",
-                      "golpeteo": "true",
-                      "hundimientos": "true",
-                      "mas20porciento": "true",
-                      "pisosHuecos": "true",
-                      "vibraciones": "true"
-                    },
-                    "files": [
-                      "string"
-                    ],
-                    "geolocalizacion": {
-                      "latitude": 50.55,
-                      "longitude": 40.9
-                    },
-                    "id": 6546546546546546546,
-                    "modifiedOn": "0 de mes año",
-                    "paralelasPiso": "true",
-                    "revisada": "true",
-                    "revisiones": [
-                      {
-                        "comentarios": "esta muy mal",
-                        "createdOn": "0 de mes año",
-                        "diagonalesLosa": "true",
-                        "diagonalesPiso": "true",
-                        "modifiedOn": "0 de mes año",
-                        "paralelasPiso": "true",
-                        "peligroInminente": "true",
-                        "revisadaPor": "Valentine"
-                      }
-                    ],
-                    "tweet": "string",
-                    "userId": "valentine"
-                  },
-                  
-              
-            ],
+            items:[],
             filters:{
                 gravedad: '',
                 tipoGrieta:'',
@@ -371,10 +39,32 @@ class Listado extends React.Component {
       this.props.dispatch(SCROLL(e.srcElement.body.scrollTop))
     }
 
-    componentDidMount(){
-
-        window.addEventListener('scroll',this.scroll)
-        document.documentElement.scrollTop = this.props.scroll
+    componentWillMount(){
+        this.setState({
+          filters:this.props.filters
+        },function(){
+          getGrietas().then((array)=>{
+            if(array[0] == 200){
+              this.setState({
+                items:array[1]
+                },()=>{
+                this.busqueda()  
+                //promise
+                document.documentElement.scrollTop = this.props.scroll
+                window.addEventListener('scroll',this.scroll)
+                
+                })
+            }
+            else {
+              this.setState({
+                items:[]
+                })
+            }
+          })
+                
+        }
+      )
+      
     }
 
 
@@ -385,6 +75,7 @@ class Listado extends React.Component {
         this.setState({
             state
         })
+        this.props.dispatch(FILTERS(state))
         
     }
 
