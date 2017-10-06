@@ -6,3 +6,15 @@
 .divFiltros{
     margin-bottom:3%;
 }
+
+.divButtonTop{
+
+}
+
+.buttonTop{
+    width: min-content;
+    height: min-content;
+    float: right;
+    position: absolute;
+    
+}

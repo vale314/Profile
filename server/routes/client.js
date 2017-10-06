@@ -1,9 +1,7 @@
 const express = require('express');
 const router = new express.Router();
 
-router.get('/grietas',(req,res,next)=>{
-    res.status(200).json(
-        [
+const json = [
         {
                     "comentario": "La verdad Se Encuentra En Muy Mal",
                     "createdOn": "0 de mes año",
@@ -347,7 +345,17 @@ router.get('/grietas',(req,res,next)=>{
                     "userId": "valentine"
                   },
                 ]
+
+
+
+router.get('/grietas',(req,res,next)=>{
+    res.status(200).json(
+        json
     )
+})
+
+router.get('/grieta',(req,res,next)=>{
+
 })
 
 module.exports = router

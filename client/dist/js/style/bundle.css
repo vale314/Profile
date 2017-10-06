@@ -21,4 +21,10 @@
 .divFiltros {
   margin-bottom: 3%; }
 
+.buttonTop {
+  width: min-content;
+  height: min-content;
+  float: right;
+  position: absolute; }
+
 /*# sourceMappingURL=bundle.css.map*/

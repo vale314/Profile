@@ -33,35 +33,57 @@ class Listado extends React.Component {
         this.handleChange = this.handleChange.bind(this)
         this.busqueda = this.busqueda.bind(this)
         this.scroll = this.scroll.bind(this)
+        this.getGrietasList = this.getGrietasList.bind(this)
+        this.onFind = this.onFind.bind(this)
+        this.onClear = this.onClear.bind(this)
     }
 
     scroll(e){
       this.props.dispatch(SCROLL(e.srcElement.body.scrollTop))
     }
 
+
+
+    getGrietasList(callback){
+        
+            getGrietas().then((array)=>{
+                if(array[0] == 200){
+                  this.setState({
+                    items:array[1]
+                    },()=>{
+                        return callback(true)
+                    })
+                }
+                else {
+                  this.setState({
+                    items:[]
+                    }, ()=> {
+                        return callback(false)
+                    }
+                
+                )
+                }
+              })
+        
+        
+    }
+
     componentWillMount(){
+
+
+            
+        
         this.setState({
           filters:this.props.filters
-        },function(){
-          getGrietas().then((array)=>{
-            if(array[0] == 200){
-              this.setState({
-                items:array[1]
-                },()=>{
-                this.busqueda()  
-                //promise
-                document.documentElement.scrollTop = this.props.scroll
-                window.addEventListener('scroll',this.scroll)
-                
-                })
-            }
-            else {
-              this.setState({
-                items:[]
-                })
-            }
-          })
-                
+        },()=>{
+            this.getGrietasList((boolean)=>{
+                if(boolean){
+                    this.busqueda()
+                        window.scrollTo(0,this.props.scroll)
+                        window.addEventListener('scroll',this.scroll)
+                    
+                }
+            })
         }
       )
       
@@ -79,7 +101,8 @@ class Listado extends React.Component {
         
     }
 
-    busqueda(){
+    busqueda(boolean = false,callback){
+
        const items = this.state.items
        const filters = this.state.filters
        var check = false;
@@ -105,11 +128,44 @@ class Listado extends React.Component {
 
 
        })
-
-       this.setState({
-           items:busqueda
-       })
+       
+            this.setState({
+                items:busqueda
+            })
+            
     }
+
+    onFind(boolean=false){
+        if(boolean){
+            this.getGrietasList((boolean)=>{
+                if(true){
+                    return this.busqueda()
+                }
+            })
+        }else{
+            this.onClear()
+            this.getGrietasList((callback)=>{
+                
+            })
+        }
+
+    }
+
+    onClear(){
+        const filters = {
+            gravedad: '',
+            tipoGrieta:'',
+            tipoHogar:'',
+            domicilio:'',
+            tamaño:''
+        }
+        this.setState({
+            filters
+        },()=>{
+            this.props.dispatch(FILTERS(filters))
+        })
+    }
+
 
     render(){
         return(
@@ -118,7 +174,7 @@ class Listado extends React.Component {
                 <Component items={this.state.items} 
                             handleChange={this.handleChange}
                             filters={this.state.filters}
-                            busqueda={this.busqueda}
+                            busqueda={this.onFind}
                 />
             </div>    
         )

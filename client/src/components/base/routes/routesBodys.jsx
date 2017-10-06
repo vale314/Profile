@@ -6,6 +6,7 @@ import Login from '../../login/body/index.jsx'
 import Publica from '../../publicaTuGrieta/body/index.jsx'
 import Revisa from '../../revisaGrietas/body/index.jsx'
 import Acerca from '../../Acerca/body/index.jsx'
+import Grieta from '../../grieta/index.jsx'
 import { Switch, Route, Miss} from 'react-router-dom'
 
 const CardExampleExpandable = () => (
@@ -17,6 +18,7 @@ const CardExampleExpandable = () => (
       <Route path='/publica' exact component={Publica} />
       <Route path='/revisa' exact component={Revisa} />
       <Route path='/acerca' exact component={Acerca} />
+      <Route path='/grieta' component={Grieta} />
     </Switch>
   </div>
 

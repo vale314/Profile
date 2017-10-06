@@ -38424,11 +38424,11 @@ var _routes2 = _interopRequireDefault(_routes);
 
 var _reactRedux = __webpack_require__(70);
 
-var _store = __webpack_require__(1183);
+var _store = __webpack_require__(1184);
 
 var _store2 = _interopRequireDefault(_store);
 
-var _reactTapEventPlugin = __webpack_require__(1193);
+var _reactTapEventPlugin = __webpack_require__(1194);
 
 var _reactTapEventPlugin2 = _interopRequireDefault(_reactTapEventPlugin);
 
@@ -83969,21 +83969,25 @@ var _index3 = __webpack_require__(1148);
 
 var _index4 = _interopRequireDefault(_index3);
 
-var _index5 = __webpack_require__(1173);
+var _index5 = __webpack_require__(1174);
 
 var _index6 = _interopRequireDefault(_index5);
 
-var _index7 = __webpack_require__(1176);
+var _index7 = __webpack_require__(1177);
 
 var _index8 = _interopRequireDefault(_index7);
 
-var _index9 = __webpack_require__(1179);
+var _index9 = __webpack_require__(1180);
 
 var _index10 = _interopRequireDefault(_index9);
 
-var _index11 = __webpack_require__(1181);
+var _index11 = __webpack_require__(1182);
 
 var _index12 = _interopRequireDefault(_index11);
+
+var _index13 = __webpack_require__(1202);
+
+var _index14 = _interopRequireDefault(_index13);
 
 var _reactRouterDom = __webpack_require__(103);
 
@@ -84001,7 +84005,8 @@ var CardExampleExpandable = function CardExampleExpandable() {
       _react2.default.createElement(_reactRouterDom.Route, { path: '/login', exact: true, component: _index6.default }),
       _react2.default.createElement(_reactRouterDom.Route, { path: '/publica', exact: true, component: _index8.default }),
       _react2.default.createElement(_reactRouterDom.Route, { path: '/revisa', exact: true, component: _index10.default }),
-      _react2.default.createElement(_reactRouterDom.Route, { path: '/acerca', exact: true, component: _index12.default })
+      _react2.default.createElement(_reactRouterDom.Route, { path: '/acerca', exact: true, component: _index12.default }),
+      _react2.default.createElement(_reactRouterDom.Route, { path: '/grieta', component: _index14.default })
     )
   );
 };
@@ -84178,7 +84183,7 @@ var _scroll = __webpack_require__(1171);
 
 var _filters = __webpack_require__(1172);
 
-var _get = __webpack_require__(1199);
+var _get = __webpack_require__(1173);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -84215,6 +84220,9 @@ var Listado = (_dec = (0, _reactRedux.connect)(function (store) {
         _this.handleChange = _this.handleChange.bind(_this);
         _this.busqueda = _this.busqueda.bind(_this);
         _this.scroll = _this.scroll.bind(_this);
+        _this.getGrietasList = _this.getGrietasList.bind(_this);
+        _this.onFind = _this.onFind.bind(_this);
+        _this.onClear = _this.onClear.bind(_this);
         return _this;
     }
 
@@ -84224,27 +84232,39 @@ var Listado = (_dec = (0, _reactRedux.connect)(function (store) {
             this.props.dispatch((0, _scroll.SCROLL)(e.srcElement.body.scrollTop));
         }
     }, {
+        key: 'getGrietasList',
+        value: function getGrietasList(callback) {
+            var _this2 = this;
+
+            (0, _get.getGrietas)().then(function (array) {
+                if (array[0] == 200) {
+                    _this2.setState({
+                        items: array[1]
+                    }, function () {
+                        return callback(true);
+                    });
+                } else {
+                    _this2.setState({
+                        items: []
+                    }, function () {
+                        return callback(false);
+                    });
+                }
+            });
+        }
+    }, {
         key: 'componentWillMount',
         value: function componentWillMount() {
+            var _this3 = this;
+
             this.setState({
                 filters: this.props.filters
             }, function () {
-                var _this2 = this;
-
-                (0, _get.getGrietas)().then(function (array) {
-                    if (array[0] == 200) {
-                        _this2.setState({
-                            items: array[1]
-                        }, function () {
-                            _this2.busqueda();
-                            //promise
-                            document.documentElement.scrollTop = _this2.props.scroll;
-                            window.addEventListener('scroll', _this2.scroll);
-                        });
-                    } else {
-                        _this2.setState({
-                            items: []
-                        });
+                _this3.getGrietasList(function (boolean) {
+                    if (boolean) {
+                        _this3.busqueda();
+                        window.scrollTo(0, _this3.props.scroll);
+                        window.addEventListener('scroll', _this3.scroll);
                     }
                 });
             });
@@ -84263,6 +84283,10 @@ var Listado = (_dec = (0, _reactRedux.connect)(function (store) {
     }, {
         key: 'busqueda',
         value: function busqueda() {
+            var boolean = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+            var callback = arguments[1];
+
+
             var items = this.state.items;
             var filters = this.state.filters;
             var check = false;
@@ -84285,6 +84309,42 @@ var Listado = (_dec = (0, _reactRedux.connect)(function (store) {
             });
         }
     }, {
+        key: 'onFind',
+        value: function onFind() {
+            var _this4 = this;
+
+            var boolean = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
+            if (boolean) {
+                this.getGrietasList(function (boolean) {
+                    if (true) {
+                        return _this4.busqueda();
+                    }
+                });
+            } else {
+                this.onClear();
+                this.getGrietasList(function (callback) {});
+            }
+        }
+    }, {
+        key: 'onClear',
+        value: function onClear() {
+            var _this5 = this;
+
+            var filters = {
+                gravedad: '',
+                tipoGrieta: '',
+                tipoHogar: '',
+                domicilio: '',
+                tamaño: ''
+            };
+            this.setState({
+                filters: filters
+            }, function () {
+                _this5.props.dispatch((0, _filters.FILTERS)(filters));
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
             return _react2.default.createElement(
@@ -84294,7 +84354,7 @@ var Listado = (_dec = (0, _reactRedux.connect)(function (store) {
                 _react2.default.createElement(_body2.default, { items: this.state.items,
                     handleChange: this.handleChange,
                     filters: this.state.filters,
-                    busqueda: this.busqueda
+                    busqueda: this.onFind
                 })
             );
         }
@@ -84331,6 +84391,18 @@ var _style = __webpack_require__(559);
 
 var _style2 = _interopRequireDefault(_style);
 
+var _Add = __webpack_require__(1200);
+
+var _Add2 = _interopRequireDefault(_Add);
+
+var _ModeEdit = __webpack_require__(1201);
+
+var _ModeEdit2 = _interopRequireDefault(_ModeEdit);
+
+var _Button = __webpack_require__(116);
+
+var _Button2 = _interopRequireDefault(_Button);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -84346,51 +84418,60 @@ var HeaderComponent = function HeaderComponent(_ref) {
         busqueda = _ref.busqueda;
     return _react2.default.createElement(
         'div',
-        { className: 'divImage' },
-        _react2.default.createElement(_filtros2.default, { filters: filters, handleChange: handleChange, busqueda: busqueda }),
+        null,
         _react2.default.createElement(
-            Semantic.Card.Group,
-            { style: (_ref2 = { textAlign: 'center' }, _defineProperty(_ref2, 'textAlign', '-webkit-center'), _defineProperty(_ref2, 'paddingLeft', '15%'), _defineProperty(_ref2, 'paddingRight', '15%'), _defineProperty(_ref2, 'width', window.innerWidth + 'px'), _ref2) },
-            items.map(function (value, index) {
-                return _react2.default.createElement(
-                    Semantic.Card,
-                    { key: index, style: _defineProperty({ textAlign: 'center' }, 'textAlign', '-webkit-center') },
-                    _react2.default.createElement(Semantic.Image, { src: 'https://i.ytimg.com/vi/6-MAPOFshM0/hqdefault.jpg' }),
-                    _react2.default.createElement(
-                        Semantic.Card.Content,
-                        null,
+            'div',
+            { className: 'divImage' },
+            _react2.default.createElement(_filtros2.default, { filters: filters, handleChange: handleChange, busqueda: busqueda }),
+            _react2.default.createElement(
+                Semantic.Card.Group,
+                { style: (_ref2 = { textAlign: 'center' }, _defineProperty(_ref2, 'textAlign', '-webkit-center'), _defineProperty(_ref2, 'paddingLeft', '15%'), _defineProperty(_ref2, 'paddingRight', '15%'), _defineProperty(_ref2, 'width', window.innerWidth + 'px'), _ref2) },
+                items.map(function (value, index) {
+                    return _react2.default.createElement(
+                        Semantic.Card,
+                        { key: index, style: _defineProperty({ textAlign: 'center' }, 'textAlign', '-webkit-center') },
+                        _react2.default.createElement(Semantic.Image, { src: 'https://i.ytimg.com/vi/6-MAPOFshM0/hqdefault.jpg' }),
                         _react2.default.createElement(
-                            Semantic.Card.Header,
-                            null,
-                            'Matthew'
-                        ),
-                        _react2.default.createElement(
-                            Semantic.Card.Meta,
+                            Semantic.Card.Content,
                             null,
                             _react2.default.createElement(
-                                'span',
-                                { className: 'date' },
-                                'Joined in 2015'
+                                Semantic.Card.Header,
+                                null,
+                                'Matthew'
+                            ),
+                            _react2.default.createElement(
+                                Semantic.Card.Meta,
+                                null,
+                                _react2.default.createElement(
+                                    'span',
+                                    { className: 'date' },
+                                    'Joined in 2015'
+                                )
+                            ),
+                            _react2.default.createElement(
+                                Semantic.Card.Description,
+                                null,
+                                'Matthew is a musician living in Nashville.'
                             )
                         ),
                         _react2.default.createElement(
-                            Semantic.Card.Description,
-                            null,
-                            'Matthew is a musician living in Nashville.'
+                            Semantic.Card.Content,
+                            { extra: true },
+                            _react2.default.createElement(
+                                'a',
+                                null,
+                                _react2.default.createElement(Semantic.Icon, { name: 'user' }),
+                                '22 Friends'
+                            )
                         )
-                    ),
-                    _react2.default.createElement(
-                        Semantic.Card.Content,
-                        { extra: true },
-                        _react2.default.createElement(
-                            'a',
-                            null,
-                            _react2.default.createElement(Semantic.Icon, { name: 'user' }),
-                            '22 Friends'
-                        )
-                    )
-                );
-            })
+                    );
+                })
+            ),
+            _react2.default.createElement(
+                _Button2.default,
+                { fab: true, color: 'primary', 'aria-label': 'add', className: 'buttonTop' },
+                _react2.default.createElement(_Add2.default, null)
+            )
         )
     );
 };
@@ -84663,6 +84744,13 @@ var filtros = function filtros(_ref) {
                         return busqueda(true);
                     } },
                 'Accent'
+            ),
+            _react2.default.createElement(
+                _Button2.default,
+                { raised: true, color: 'accent', onClick: function onClick() {
+                        return busqueda(false);
+                    } },
+                'Limpiar'
             )
         )
     );
@@ -87520,6 +87608,38 @@ function FILTERS(filters) {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.getGrietas = getGrietas;
+function getGrietas() {
+    return new Promise(function (resolve, reject) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('get', '/v1/grietas');
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.responseType = 'json';
+        xhr.addEventListener('load', function () {
+            if (xhr.status === 200) {
+
+                return resolve([xhr.status, xhr.response]);
+            } else {
+                if (xhr.status === 400) {
+
+                    return resolve();
+                }
+            }
+        });
+        xhr.send();
+    });
+}
+
+/***/ }),
+/* 1174 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -87529,7 +87649,7 @@ var _react = __webpack_require__(2);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _component = __webpack_require__(1174);
+var _component = __webpack_require__(1175);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -87587,7 +87707,7 @@ var Login = (_dec = (0, _reactRedux.connect)(function (store) {
 exports.default = Login;
 
 /***/ }),
-/* 1174 */
+/* 1175 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -87603,7 +87723,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _semanticUiReact = __webpack_require__(93);
 
-var _reactFacebookLogin = __webpack_require__(1175);
+var _reactFacebookLogin = __webpack_require__(1176);
 
 var _reactFacebookLogin2 = _interopRequireDefault(_reactFacebookLogin);
 
@@ -87642,13 +87762,13 @@ var HeaderComponent = function HeaderComponent(_ref) {
 exports.default = HeaderComponent;
 
 /***/ }),
-/* 1175 */
+/* 1176 */
 /***/ (function(module, exports, __webpack_require__) {
 
 !function(e,t){ true?module.exports=t(__webpack_require__(2)):"function"==typeof define&&define.amd?define(["react"],t):"object"==typeof exports?exports.FacebookLogin=t(require("react")):e.FacebookLogin=t(e.react)}(this,function(e){return function(e){function t(n){if(o[n])return o[n].exports;var i=o[n]={exports:{},id:n,loaded:!1};return e[n].call(i.exports,i,i.exports,t),i.loaded=!0,i.exports}var o={};return t.m=e,t.c=o,t.p="",t(0)}([function(e,t,o){e.exports=o(2)},function(e,t,o){"use strict";function n(e){return e&&e.__esModule?e:{"default":e}}function i(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function r(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!t||"object"!=typeof t&&"function"!=typeof t?e:t}function a(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function, not "+typeof t);e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t)}Object.defineProperty(t,"__esModule",{value:!0});var s=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var o=arguments[t];for(var n in o)Object.prototype.hasOwnProperty.call(o,n)&&(e[n]=o[n])}return e},c=function(){function e(e,t){for(var o=0;o<t.length;o++){var n=t[o];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,n.key,n)}}return function(t,o,n){return o&&e(t.prototype,o),n&&e(t,n),t}}(),u=o(11),l=n(u),f=o(9),d=n(f),p=o(4),b=n(p),h=o(3),y=n(h),g=function(){var e=!1;try{e=!!(window.navigator&&window.navigator.standalone||navigator.userAgent.match("CriOS")||navigator.userAgent.match(/mobile/i))}catch(t){}return e},m=function(e){return["button","input","select","textarea","optgroup","option","fieldset"].indexOf((e+"").toLowerCase())>=0},v=function(e){function t(){var e,o,n,a;i(this,t);for(var c=arguments.length,u=Array(c),l=0;l<c;l++)u[l]=arguments[l];return o=n=r(this,(e=t.__proto__||Object.getPrototypeOf(t)).call.apply(e,[this].concat(u))),n.state={isSdkLoaded:!1,isProcessing:!1},n.responseApi=function(e){window.FB.api("/me",{locale:n.props.language,fields:n.props.fields},function(t){s(t,e),n.props.callback(t)})},n.checkLoginState=function(e){n.setStateIfMounted({isProcessing:!1}),e.authResponse?n.responseApi(e.authResponse):n.props.callback&&n.props.callback({status:e.status})},n.checkLoginAfterRefresh=function(e){"connected"===e.status?n.checkLoginState(e):window.FB.login(function(e){return n.checkLoginState(e)},!0)},n.click=function(e){if(n.state.isSdkLoaded&&!n.state.isProcessing&&!n.props.isDisabled){n.setState({isProcessing:!0});var t=n.props,o=t.scope,i=t.appId,r=t.onClick,a=t.reAuthenticate,s=t.redirectUri,c=t.disableMobileRedirect;if("function"!=typeof r||(r(e),!e.defaultPrevented)){var u={client_id:i,redirect_uri:s,state:"facebookdirect",scope:o};a&&(u.auth_type="reauthenticate"),n.props.isMobile&&!c?window.location.href="//www.facebook.com/dialog/oauth?"+(0,y["default"])(u):window.FB.login(n.checkLoginState,{scope:o,auth_type:u.auth_type})}}},a=o,r(n,a)}return a(t,e),c(t,[{key:"componentDidMount",value:function(){if(this._isMounted=!0,document.getElementById("facebook-jssdk"))return void this.sdkLoaded();this.setFbAsyncInit(),this.loadSdkAsynchronously();var e=document.getElementById("fb-root");e||(e=document.createElement("div"),e.id="fb-root",document.body.appendChild(e))}},{key:"componentWillUnmount",value:function(){this._isMounted=!1}},{key:"setStateIfMounted",value:function(e){this._isMounted&&this.setState(e)}},{key:"setFbAsyncInit",value:function(){var e=this,t=this.props,o=t.appId,n=t.xfbml,i=t.cookie,r=t.version,a=t.autoLoad;window.fbAsyncInit=function(){window.FB.init({version:"v"+r,appId:o,xfbml:n,cookie:i}),e.setStateIfMounted({isSdkLoaded:!0}),(a||window.location.search.includes("facebookdirect"))&&window.FB.getLoginStatus(e.checkLoginAfterRefresh)}}},{key:"sdkLoaded",value:function(){this.setState({isSdkLoaded:!0})}},{key:"loadSdkAsynchronously",value:function(){var e=this.props.language;!function(t,o,n){var i=t.getElementsByTagName(o)[0],r=i,a=i;t.getElementById(n)||(a=t.createElement(o),a.id=n,a.src="https://connect.facebook.net/"+e+"/all.js",r.parentNode.insertBefore(a,r))}(document,"script","facebook-jssdk")}},{key:"style",value:function(){var e=this.constructor.defaultProps.cssClass;return this.props.cssClass===e&&l["default"].createElement("style",{dangerouslySetInnerHTML:{__html:b["default"]}})}},{key:"containerStyle",value:function(){var e={transition:"opacity 0.5s"};return(this.state.isProcessing||!this.state.isSdkLoaded||this.props.isDisabled)&&(e.opacity=.6),s(e,this.props.containerStyle)}},{key:"render",value:function(){var e=this.props,t=e.cssClass,o=e.size,n=e.icon,i=e.textButton,r=e.typeButton,a=e.buttonStyle,c="string"==typeof n,u={};return this.props.isDisabled&&m(this.props.tag)&&(u.disabled=!0),l["default"].createElement("span",{style:this.containerStyle()},c&&l["default"].createElement("link",{rel:"stylesheet",href:"//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"}),l["default"].createElement(this.props.tag,s({type:r,className:t+" "+o,style:a,onClick:this.click},u),n&&c&&l["default"].createElement("i",{className:"fa "+n}),n&&!c&&n,i),this.style())}}]),t}(l["default"].Component);v.propTypes={isDisabled:d["default"].bool,callback:d["default"].func.isRequired,appId:d["default"].string.isRequired,xfbml:d["default"].bool,cookie:d["default"].bool,reAuthenticate:d["default"].bool,scope:d["default"].string,redirectUri:d["default"].string,textButton:d["default"].string,typeButton:d["default"].string,autoLoad:d["default"].bool,disableMobileRedirect:d["default"].bool,isMobile:d["default"].bool,size:d["default"].string,fields:d["default"].string,cssClass:d["default"].string,version:d["default"].string,icon:d["default"].any,language:d["default"].string,onClick:d["default"].func,containerStyle:d["default"].object,buttonStyle:d["default"].object,tag:d["default"].oneOfType([d["default"].node,d["default"].func])},v.defaultProps={textButton:"Login with Facebook",typeButton:"button",redirectUri:"undefined"!=typeof window?window.location.href:"/",scope:"public_profile,email",xfbml:!1,cookie:!1,reAuthenticate:!1,size:"metro",fields:"name",cssClass:"kep-login-facebook",version:"2.3",language:"en_US",disableMobileRedirect:!1,isMobile:g(),tag:"button"},t["default"]=v},function(e,t,o){"use strict";function n(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(t,"__esModule",{value:!0}),t["default"]=void 0;var i=o(1),r=n(i);t["default"]=r["default"]},function(e,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t["default"]=function(e){var t="";for(var o in e)""!==t&&(t+="&"),t+=o+"="+encodeURIComponent(e[o]);return t}},function(e,t,o){t=e.exports=o(5)(),t.push([e.id,".kep-login-facebook{font-family:Helvetica,sans-serif;font-weight:700;-webkit-font-smoothing:antialiased;color:#fff;cursor:pointer;display:inline-block;font-size:calc(.27548vw + 12.71074px);text-decoration:none;text-transform:uppercase;transition:background-color .3s,border-color .3s;background-color:#4c69ba;border:calc(.06887vw + .67769px) solid #4c69ba;padding:calc(.34435vw + 13.38843px) calc(.34435vw + 18.38843px)}.kep-login-facebook.small{padding:calc(.34435vw + 3.38843px) calc(.34435vw + 8.38843px)}.kep-login-facebook.medium{padding:calc(.34435vw + 8.38843px) calc(.34435vw + 13.38843px)}.kep-login-facebook.metro{border-radius:0}.kep-login-facebook .fa{margin-right:calc(.34435vw + 3.38843px)}",""]),t.locals={"kep-login-facebook":"kep-login-facebook",small:"small",medium:"medium",metro:"metro",fa:"fa"}},function(e,t){e.exports=function(){var e=[];return e.toString=function(){for(var e=[],t=0;t<this.length;t++){var o=this[t];o[2]?e.push("@media "+o[2]+"{"+o[1]+"}"):e.push(o[1])}return e.join("")},e.i=function(t,o){"string"==typeof t&&(t=[[null,t,""]]);for(var n={},i=0;i<this.length;i++){var r=this[i][0];"number"==typeof r&&(n[r]=!0)}for(i=0;i<t.length;i++){var a=t[i];"number"==typeof a[0]&&n[a[0]]||(o&&!a[2]?a[2]=o:o&&(a[2]="("+a[2]+") and ("+o+")"),e.push(a))}},e}},function(e,t){"use strict";function o(e){return function(){return e}}var n=function(){};n.thatReturns=o,n.thatReturnsFalse=o(!1),n.thatReturnsTrue=o(!0),n.thatReturnsNull=o(null),n.thatReturnsThis=function(){return this},n.thatReturnsArgument=function(e){return e},e.exports=n},function(e,t,o){"use strict";function n(e,t,o,n,r,a,s,c){if(i(t),!e){var u;if(void 0===t)u=new Error("Minified exception occurred; use the non-minified dev environment for the full error message and additional helpful warnings.");else{var l=[o,n,r,a,s,c],f=0;u=new Error(t.replace(/%s/g,function(){return l[f++]})),u.name="Invariant Violation"}throw u.framesToPop=1,u}}var i=function(e){};e.exports=n},function(e,t,o){"use strict";var n=o(6),i=o(7),r=o(10);e.exports=function(){function e(e,t,o,n,a,s){s!==r&&i(!1,"Calling PropTypes validators directly is not supported by the `prop-types` package. Use PropTypes.checkPropTypes() to call them. Read more at http://fb.me/use-check-prop-types")}function t(){return e}e.isRequired=e;var o={array:e,bool:e,func:e,number:e,object:e,string:e,symbol:e,any:e,arrayOf:t,element:e,instanceOf:t,node:e,objectOf:t,oneOf:t,oneOfType:t,shape:t};return o.checkPropTypes=n,o.PropTypes=o,o}},function(e,t,o){e.exports=o(8)()},function(e,t){"use strict";var o="SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED";e.exports=o},function(t,o){t.exports=e}])});
 
 /***/ }),
-/* 1176 */
+/* 1177 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -87666,13 +87786,13 @@ var _react = __webpack_require__(2);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _component = __webpack_require__(1177);
+var _component = __webpack_require__(1178);
 
 var _component2 = _interopRequireDefault(_component);
 
 var _reactRedux = __webpack_require__(70);
 
-var _ajax = __webpack_require__(1178);
+var _ajax = __webpack_require__(1179);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -87710,7 +87830,7 @@ var Publica = (_dec = (0, _reactRedux.connect)(function (store) {
 exports.default = Publica;
 
 /***/ }),
-/* 1177 */
+/* 1178 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -87741,7 +87861,7 @@ var publica = function publica(_ref) {
 exports.default = publica;
 
 /***/ }),
-/* 1178 */
+/* 1179 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -87770,7 +87890,7 @@ function AJAX(route, props) {
 }
 
 /***/ }),
-/* 1179 */
+/* 1180 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -87786,7 +87906,7 @@ var _react = __webpack_require__(2);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _component = __webpack_require__(1180);
+var _component = __webpack_require__(1181);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -87820,7 +87940,7 @@ var Revisa = function (_React$Component) {
 exports.default = Revisa;
 
 /***/ }),
-/* 1180 */
+/* 1181 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -87851,7 +87971,7 @@ var revisa = function revisa(_ref) {
 exports.default = revisa;
 
 /***/ }),
-/* 1181 */
+/* 1182 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -87867,7 +87987,7 @@ var _react = __webpack_require__(2);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _component = __webpack_require__(1182);
+var _component = __webpack_require__(1183);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -87901,7 +88021,7 @@ var Acerca = function (_React$Component) {
 exports.default = Acerca;
 
 /***/ }),
-/* 1182 */
+/* 1183 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -87938,7 +88058,7 @@ var acerca = function acerca(_ref) {
 exports.default = acerca;
 
 /***/ }),
-/* 1183 */
+/* 1184 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -87950,19 +88070,19 @@ Object.defineProperty(exports, "__esModule", {
 
 var _redux = __webpack_require__(301);
 
-var _reduxLogger = __webpack_require__(1184);
+var _reduxLogger = __webpack_require__(1185);
 
 var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 
-var _reduxThunk = __webpack_require__(1185);
+var _reduxThunk = __webpack_require__(1186);
 
 var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-var _reduxPromiseMiddleware = __webpack_require__(1186);
+var _reduxPromiseMiddleware = __webpack_require__(1187);
 
 var _reduxPromiseMiddleware2 = _interopRequireDefault(_reduxPromiseMiddleware);
 
-var _index = __webpack_require__(1188);
+var _index = __webpack_require__(1189);
 
 var _index2 = _interopRequireDefault(_index);
 
@@ -87975,7 +88095,7 @@ var state = localStorage.getItem('reduxState') ? JSON.parse(localStorage.getItem
 exports.default = (0, _redux.createStore)(_index2.default, state, middleware);
 
 /***/ }),
-/* 1184 */
+/* 1185 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {!function(e,t){ true?t(exports):"function"==typeof define&&define.amd?define(["exports"],t):t(e.reduxLogger=e.reduxLogger||{})}(this,function(e){"use strict";function t(e,t){e.super_=t,e.prototype=Object.create(t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}})}function r(e,t){Object.defineProperty(this,"kind",{value:e,enumerable:!0}),t&&t.length&&Object.defineProperty(this,"path",{value:t,enumerable:!0})}function n(e,t,r){n.super_.call(this,"E",e),Object.defineProperty(this,"lhs",{value:t,enumerable:!0}),Object.defineProperty(this,"rhs",{value:r,enumerable:!0})}function o(e,t){o.super_.call(this,"N",e),Object.defineProperty(this,"rhs",{value:t,enumerable:!0})}function i(e,t){i.super_.call(this,"D",e),Object.defineProperty(this,"lhs",{value:t,enumerable:!0})}function a(e,t,r){a.super_.call(this,"A",e),Object.defineProperty(this,"index",{value:t,enumerable:!0}),Object.defineProperty(this,"item",{value:r,enumerable:!0})}function f(e,t,r){var n=e.slice((r||t)+1||e.length);return e.length=t<0?e.length+t:t,e.push.apply(e,n),e}function u(e){var t="undefined"==typeof e?"undefined":N(e);return"object"!==t?t:e===Math?"math":null===e?"null":Array.isArray(e)?"array":"[object Date]"===Object.prototype.toString.call(e)?"date":"function"==typeof e.toString&&/^\/.*\//.test(e.toString())?"regexp":"object"}function l(e,t,r,c,s,d,p){s=s||[],p=p||[];var g=s.slice(0);if("undefined"!=typeof d){if(c){if("function"==typeof c&&c(g,d))return;if("object"===("undefined"==typeof c?"undefined":N(c))){if(c.prefilter&&c.prefilter(g,d))return;if(c.normalize){var h=c.normalize(g,d,e,t);h&&(e=h[0],t=h[1])}}}g.push(d)}"regexp"===u(e)&&"regexp"===u(t)&&(e=e.toString(),t=t.toString());var y="undefined"==typeof e?"undefined":N(e),v="undefined"==typeof t?"undefined":N(t),b="undefined"!==y||p&&p[p.length-1].lhs&&p[p.length-1].lhs.hasOwnProperty(d),m="undefined"!==v||p&&p[p.length-1].rhs&&p[p.length-1].rhs.hasOwnProperty(d);if(!b&&m)r(new o(g,t));else if(!m&&b)r(new i(g,e));else if(u(e)!==u(t))r(new n(g,e,t));else if("date"===u(e)&&e-t!==0)r(new n(g,e,t));else if("object"===y&&null!==e&&null!==t)if(p.filter(function(t){return t.lhs===e}).length)e!==t&&r(new n(g,e,t));else{if(p.push({lhs:e,rhs:t}),Array.isArray(e)){var w;e.length;for(w=0;w<e.length;w++)w>=t.length?r(new a(g,w,new i(void 0,e[w]))):l(e[w],t[w],r,c,g,w,p);for(;w<t.length;)r(new a(g,w,new o(void 0,t[w++])))}else{var x=Object.keys(e),S=Object.keys(t);x.forEach(function(n,o){var i=S.indexOf(n);i>=0?(l(e[n],t[n],r,c,g,n,p),S=f(S,i)):l(e[n],void 0,r,c,g,n,p)}),S.forEach(function(e){l(void 0,t[e],r,c,g,e,p)})}p.length=p.length-1}else e!==t&&("number"===y&&isNaN(e)&&isNaN(t)||r(new n(g,e,t)))}function c(e,t,r,n){return n=n||[],l(e,t,function(e){e&&n.push(e)},r),n.length?n:void 0}function s(e,t,r){if(r.path&&r.path.length){var n,o=e[t],i=r.path.length-1;for(n=0;n<i;n++)o=o[r.path[n]];switch(r.kind){case"A":s(o[r.path[n]],r.index,r.item);break;case"D":delete o[r.path[n]];break;case"E":case"N":o[r.path[n]]=r.rhs}}else switch(r.kind){case"A":s(e[t],r.index,r.item);break;case"D":e=f(e,t);break;case"E":case"N":e[t]=r.rhs}return e}function d(e,t,r){if(e&&t&&r&&r.kind){for(var n=e,o=-1,i=r.path?r.path.length-1:0;++o<i;)"undefined"==typeof n[r.path[o]]&&(n[r.path[o]]="number"==typeof r.path[o]?[]:{}),n=n[r.path[o]];switch(r.kind){case"A":s(r.path?n[r.path[o]]:n,r.index,r.item);break;case"D":delete n[r.path[o]];break;case"E":case"N":n[r.path[o]]=r.rhs}}}function p(e,t,r){if(r.path&&r.path.length){var n,o=e[t],i=r.path.length-1;for(n=0;n<i;n++)o=o[r.path[n]];switch(r.kind){case"A":p(o[r.path[n]],r.index,r.item);break;case"D":o[r.path[n]]=r.lhs;break;case"E":o[r.path[n]]=r.lhs;break;case"N":delete o[r.path[n]]}}else switch(r.kind){case"A":p(e[t],r.index,r.item);break;case"D":e[t]=r.lhs;break;case"E":e[t]=r.lhs;break;case"N":e=f(e,t)}return e}function g(e,t,r){if(e&&t&&r&&r.kind){var n,o,i=e;for(o=r.path.length-1,n=0;n<o;n++)"undefined"==typeof i[r.path[n]]&&(i[r.path[n]]={}),i=i[r.path[n]];switch(r.kind){case"A":p(i[r.path[n]],r.index,r.item);break;case"D":i[r.path[n]]=r.lhs;break;case"E":i[r.path[n]]=r.lhs;break;case"N":delete i[r.path[n]]}}}function h(e,t,r){if(e&&t){var n=function(n){r&&!r(e,t,n)||d(e,t,n)};l(e,t,n)}}function y(e){return"color: "+F[e].color+"; font-weight: bold"}function v(e){var t=e.kind,r=e.path,n=e.lhs,o=e.rhs,i=e.index,a=e.item;switch(t){case"E":return[r.join("."),n,"→",o];case"N":return[r.join("."),o];case"D":return[r.join(".")];case"A":return[r.join(".")+"["+i+"]",a];default:return[]}}function b(e,t,r,n){var o=c(e,t);try{n?r.groupCollapsed("diff"):r.group("diff")}catch(e){r.log("diff")}o?o.forEach(function(e){var t=e.kind,n=v(e);r.log.apply(r,["%c "+F[t].text,y(t)].concat(P(n)))}):r.log("—— no diff ——");try{r.groupEnd()}catch(e){r.log("—— diff end —— ")}}function m(e,t,r,n){switch("undefined"==typeof e?"undefined":N(e)){case"object":return"function"==typeof e[n]?e[n].apply(e,P(r)):e[n];case"function":return e(t);default:return e}}function w(e){var t=e.timestamp,r=e.duration;return function(e,n,o){var i=["action"];return i.push("%c"+String(e.type)),t&&i.push("%c@ "+n),r&&i.push("%c(in "+o.toFixed(2)+" ms)"),i.join(" ")}}function x(e,t){var r=t.logger,n=t.actionTransformer,o=t.titleFormatter,i=void 0===o?w(t):o,a=t.collapsed,f=t.colors,u=t.level,l=t.diff,c="undefined"==typeof t.titleFormatter;e.forEach(function(o,s){var d=o.started,p=o.startedTime,g=o.action,h=o.prevState,y=o.error,v=o.took,w=o.nextState,x=e[s+1];x&&(w=x.prevState,v=x.started-d);var S=n(g),k="function"==typeof a?a(function(){return w},g,o):a,j=D(p),E=f.title?"color: "+f.title(S)+";":"",A=["color: gray; font-weight: lighter;"];A.push(E),t.timestamp&&A.push("color: gray; font-weight: lighter;"),t.duration&&A.push("color: gray; font-weight: lighter;");var O=i(S,j,v);try{k?f.title&&c?r.groupCollapsed.apply(r,["%c "+O].concat(A)):r.groupCollapsed(O):f.title&&c?r.group.apply(r,["%c "+O].concat(A)):r.group(O)}catch(e){r.log(O)}var N=m(u,S,[h],"prevState"),P=m(u,S,[S],"action"),C=m(u,S,[y,h],"error"),F=m(u,S,[w],"nextState");if(N)if(f.prevState){var L="color: "+f.prevState(h)+"; font-weight: bold";r[N]("%c prev state",L,h)}else r[N]("prev state",h);if(P)if(f.action){var T="color: "+f.action(S)+"; font-weight: bold";r[P]("%c action    ",T,S)}else r[P]("action    ",S);if(y&&C)if(f.error){var M="color: "+f.error(y,h)+"; font-weight: bold;";r[C]("%c error     ",M,y)}else r[C]("error     ",y);if(F)if(f.nextState){var _="color: "+f.nextState(w)+"; font-weight: bold";r[F]("%c next state",_,w)}else r[F]("next state",w);l&&b(h,w,r,k);try{r.groupEnd()}catch(e){r.log("—— log end ——")}})}function S(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},t=Object.assign({},L,e),r=t.logger,n=t.stateTransformer,o=t.errorTransformer,i=t.predicate,a=t.logErrors,f=t.diffPredicate;if("undefined"==typeof r)return function(){return function(e){return function(t){return e(t)}}};if(e.getState&&e.dispatch)return console.error("[redux-logger] redux-logger not installed. Make sure to pass logger instance as middleware:\n// Logger with default options\nimport { logger } from 'redux-logger'\nconst store = createStore(\n  reducer,\n  applyMiddleware(logger)\n)\n// Or you can create your own logger with custom options http://bit.ly/redux-logger-options\nimport createLogger from 'redux-logger'\nconst logger = createLogger({\n  // ...options\n});\nconst store = createStore(\n  reducer,\n  applyMiddleware(logger)\n)\n"),function(){return function(e){return function(t){return e(t)}}};var u=[];return function(e){var r=e.getState;return function(e){return function(l){if("function"==typeof i&&!i(r,l))return e(l);var c={};u.push(c),c.started=O.now(),c.startedTime=new Date,c.prevState=n(r()),c.action=l;var s=void 0;if(a)try{s=e(l)}catch(e){c.error=o(e)}else s=e(l);c.took=O.now()-c.started,c.nextState=n(r());var d=t.diff&&"function"==typeof f?f(r,l):t.diff;if(x(u,Object.assign({},t,{diff:d})),u.length=0,c.error)throw c.error;return s}}}}var k,j,E=function(e,t){return new Array(t+1).join(e)},A=function(e,t){return E("0",t-e.toString().length)+e},D=function(e){return A(e.getHours(),2)+":"+A(e.getMinutes(),2)+":"+A(e.getSeconds(),2)+"."+A(e.getMilliseconds(),3)},O="undefined"!=typeof performance&&null!==performance&&"function"==typeof performance.now?performance:Date,N="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},P=function(e){if(Array.isArray(e)){for(var t=0,r=Array(e.length);t<e.length;t++)r[t]=e[t];return r}return Array.from(e)},C=[];k="object"===("undefined"==typeof global?"undefined":N(global))&&global?global:"undefined"!=typeof window?window:{},j=k.DeepDiff,j&&C.push(function(){"undefined"!=typeof j&&k.DeepDiff===c&&(k.DeepDiff=j,j=void 0)}),t(n,r),t(o,r),t(i,r),t(a,r),Object.defineProperties(c,{diff:{value:c,enumerable:!0},observableDiff:{value:l,enumerable:!0},applyDiff:{value:h,enumerable:!0},applyChange:{value:d,enumerable:!0},revertChange:{value:g,enumerable:!0},isConflict:{value:function(){return"undefined"!=typeof j},enumerable:!0},noConflict:{value:function(){return C&&(C.forEach(function(e){e()}),C=null),c},enumerable:!0}});var F={E:{color:"#2196F3",text:"CHANGED:"},N:{color:"#4CAF50",text:"ADDED:"},D:{color:"#F44336",text:"DELETED:"},A:{color:"#2196F3",text:"ARRAY:"}},L={level:"log",logger:console,logErrors:!0,collapsed:void 0,predicate:void 0,duration:!1,timestamp:!0,stateTransformer:function(e){return e},actionTransformer:function(e){return e},errorTransformer:function(e){return e},colors:{title:function(){return"inherit"},prevState:function(){return"#9E9E9E"},action:function(){return"#03A9F4"},nextState:function(){return"#4CAF50"},error:function(){return"#F20404"}},diff:!1,diffPredicate:void 0,transformer:void 0},T=function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},t=e.dispatch,r=e.getState;return"function"==typeof t||"function"==typeof r?S()({dispatch:t,getState:r}):void console.error("\n[redux-logger v3] BREAKING CHANGE\n[redux-logger v3] Since 3.0.0 redux-logger exports by default logger with default settings.\n[redux-logger v3] Change\n[redux-logger v3] import createLogger from 'redux-logger'\n[redux-logger v3] to\n[redux-logger v3] import { createLogger } from 'redux-logger'\n")};e.defaults=L,e.createLogger=S,e.logger=T,e.default=T,Object.defineProperty(e,"__esModule",{value:!0})});
@@ -87983,7 +88103,7 @@ exports.default = (0, _redux.createStore)(_index2.default, state, middleware);
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(102)))
 
 /***/ }),
-/* 1185 */
+/* 1186 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -88012,7 +88132,7 @@ thunk.withExtraArgument = createThunkMiddleware;
 exports['default'] = thunk;
 
 /***/ }),
-/* 1186 */
+/* 1187 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -88021,7 +88141,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FULFILLED", function() { return FULFILLED; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REJECTED", function() { return REJECTED; });
 /* harmony export (immutable) */ __webpack_exports__["default"] = promiseMiddleware;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__isPromise__ = __webpack_require__(1187);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__isPromise__ = __webpack_require__(1188);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -88187,7 +88307,7 @@ function promiseMiddleware() {
 }
 
 /***/ }),
-/* 1187 */
+/* 1188 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -88203,7 +88323,7 @@ function isPromise(value) {
 }
 
 /***/ }),
-/* 1188 */
+/* 1189 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -88215,19 +88335,19 @@ Object.defineProperty(exports, "__esModule", {
 
 var _redux = __webpack_require__(301);
 
-var _index = __webpack_require__(1189);
+var _index = __webpack_require__(1190);
 
 var _index2 = _interopRequireDefault(_index);
 
-var _authenticate = __webpack_require__(1190);
+var _authenticate = __webpack_require__(1191);
 
 var _authenticate2 = _interopRequireDefault(_authenticate);
 
-var _index3 = __webpack_require__(1191);
+var _index3 = __webpack_require__(1192);
 
 var _index4 = _interopRequireDefault(_index3);
 
-var _filters = __webpack_require__(1192);
+var _filters = __webpack_require__(1193);
 
 var _filters2 = _interopRequireDefault(_filters);
 
@@ -88241,7 +88361,7 @@ exports.default = (0, _redux.combineReducers)({
 });
 
 /***/ }),
-/* 1189 */
+/* 1190 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -88274,7 +88394,7 @@ function reducer() {
 }
 
 /***/ }),
-/* 1190 */
+/* 1191 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -88311,7 +88431,7 @@ function reducer() {
 }
 
 /***/ }),
-/* 1191 */
+/* 1192 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -88344,7 +88464,7 @@ function reducer() {
 }
 
 /***/ }),
-/* 1192 */
+/* 1193 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -88398,11 +88518,11 @@ function reducer() {
 }
 
 /***/ }),
-/* 1193 */
+/* 1194 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process) {var invariant = __webpack_require__(11);
-var defaultClickRejectionStrategy = __webpack_require__(1194);
+var defaultClickRejectionStrategy = __webpack_require__(1195);
 
 var alreadyInjected = false;
 
@@ -88424,14 +88544,14 @@ should be injected by the application.'
   alreadyInjected = true;
 
   __webpack_require__(86).injection.injectEventPluginsByName({
-    'TapEventPlugin':       __webpack_require__(1195)(shouldRejectClick)
+    'TapEventPlugin':       __webpack_require__(1196)(shouldRejectClick)
   });
 };
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 1194 */
+/* 1195 */
 /***/ (function(module, exports) {
 
 module.exports = function(lastTouchEvent, clickTimestamp) {
@@ -88442,7 +88562,7 @@ module.exports = function(lastTouchEvent, clickTimestamp) {
 
 
 /***/ }),
-/* 1195 */
+/* 1196 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -88467,14 +88587,14 @@ module.exports = function(lastTouchEvent, clickTimestamp) {
 
 
 
-var EventConstants = __webpack_require__(1196);
+var EventConstants = __webpack_require__(1197);
 var EventPluginUtils = __webpack_require__(122);
 var EventPropagators = __webpack_require__(85);
 var SyntheticUIEvent = __webpack_require__(88);
-var TouchEventUtils = __webpack_require__(1197);
+var TouchEventUtils = __webpack_require__(1198);
 var ViewportMetrics = __webpack_require__(192);
 
-var keyOf = __webpack_require__(1198);
+var keyOf = __webpack_require__(1199);
 var topLevelTypes = EventConstants.topLevelTypes;
 
 var isStartish = EventPluginUtils.isStartish;
@@ -88620,7 +88740,7 @@ module.exports = createTapEventPlugin;
 
 
 /***/ }),
-/* 1196 */
+/* 1197 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -88715,7 +88835,7 @@ var EventConstants = {
 module.exports = EventConstants;
 
 /***/ }),
-/* 1197 */
+/* 1198 */
 /***/ (function(module, exports) {
 
 /**
@@ -88763,7 +88883,7 @@ module.exports = TouchEventUtils;
 
 
 /***/ }),
-/* 1198 */
+/* 1199 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -88803,7 +88923,87 @@ var keyOf = function keyOf(oneKeyObj) {
 module.exports = keyOf;
 
 /***/ }),
-/* 1199 */
+/* 1200 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(2);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _pure = __webpack_require__(541);
+
+var _pure2 = _interopRequireDefault(_pure);
+
+var _SvgIcon = __webpack_require__(543);
+
+var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _ref = _react2.default.createElement('path', { d: 'M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z' });
+
+var Add = function Add(props) {
+  return _react2.default.createElement(
+    _SvgIcon2.default,
+    props,
+    _ref
+  );
+};
+
+Add = (0, _pure2.default)(Add);
+Add.muiName = 'SvgIcon';
+
+exports.default = Add;
+
+/***/ }),
+/* 1201 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(2);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _pure = __webpack_require__(541);
+
+var _pure2 = _interopRequireDefault(_pure);
+
+var _SvgIcon = __webpack_require__(543);
+
+var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _ref = _react2.default.createElement('path', { d: 'M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z' });
+
+var ModeEdit = function ModeEdit(props) {
+  return _react2.default.createElement(
+    _SvgIcon2.default,
+    props,
+    _ref
+  );
+};
+
+ModeEdit = (0, _pure2.default)(ModeEdit);
+ModeEdit.muiName = 'SvgIcon';
+
+exports.default = ModeEdit;
+
+/***/ }),
+/* 1202 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -88812,27 +89012,238 @@ module.exports = keyOf;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.getGrietas = getGrietas;
-function getGrietas() {
-    return new Promise(function (resolve, reject) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('get', '/v1/grietas');
-        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        xhr.responseType = 'json';
-        xhr.addEventListener('load', function () {
-            if (xhr.status === 200) {
 
-                return resolve([xhr.status, xhr.response]);
-            } else {
-                if (xhr.status === 400) {
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-                    return resolve();
-                }
-            }
-        });
-        xhr.send();
-    });
-}
+var _react = __webpack_require__(2);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _component = __webpack_require__(1203);
+
+var _component2 = _interopRequireDefault(_component);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Grieta = function (_React$Component) {
+    _inherits(Grieta, _React$Component);
+
+    function Grieta(props) {
+        _classCallCheck(this, Grieta);
+
+        return _possibleConstructorReturn(this, (Grieta.__proto__ || Object.getPrototypeOf(Grieta)).call(this, props));
+    }
+
+    _createClass(Grieta, [{
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(_component2.default, null);
+        }
+    }]);
+
+    return Grieta;
+}(_react2.default.Component);
+
+exports.default = Grieta;
+
+/***/ }),
+/* 1203 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(2);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _semanticUiReact = __webpack_require__(93);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
+
+var Grieta = function Grieta(_ref) {
+    _objectDestructuringEmpty(_ref);
+
+    return _react2.default.createElement(
+        'div',
+        { style: { margin: 0 } },
+        _react2.default.createElement(
+            _semanticUiReact.Container,
+            { style: { textAlign: '-webkit-center' } },
+            _react2.default.createElement(
+                _semanticUiReact.Card,
+                { fluid: true },
+                _react2.default.createElement(_semanticUiReact.Image, { src: 'https://assets.metrolatam.com/mx/2017/01/24/whatsapp-image-2017-01-24-at-14-39-54-1200x600.jpg' }),
+                _react2.default.createElement(
+                    _semanticUiReact.Card.Content,
+                    null,
+                    _react2.default.createElement(
+                        _semanticUiReact.Card.Header,
+                        null,
+                        'Ciudad: Mexico'
+                    ),
+                    _react2.default.createElement(
+                        _semanticUiReact.Card.Meta,
+                        null,
+                        _react2.default.createElement(
+                            'span',
+                            { className: 'date' },
+                            'Joined in 2017'
+                        )
+                    ),
+                    _react2.default.createElement(
+                        _semanticUiReact.Card.Description,
+                        null,
+                        'Matthew is a musician living in Nashville.'
+                    )
+                ),
+                _react2.default.createElement(
+                    _semanticUiReact.Card.Content,
+                    { extra: true },
+                    _react2.default.createElement(
+                        'strong',
+                        null,
+                        'Peligro ',
+                        _react2.default.createElement('br', null)
+                    ),
+                    _react2.default.createElement(
+                        'a',
+                        null,
+                        _react2.default.createElement(_semanticUiReact.Rating, { defaultRating: 3, maxRating: 5, disabled: true })
+                    )
+                )
+            )
+        ),
+        _react2.default.createElement(
+            _semanticUiReact.Container,
+            { style: { marginTop: '50px' } },
+            _react2.default.createElement(
+                _semanticUiReact.Header,
+                { as: 'h1', textAlign: 'center' },
+                'Revisiones'
+            )
+        ),
+        _react2.default.createElement(
+            _semanticUiReact.Container,
+            { style: { marginTop: '70px' } },
+            _react2.default.createElement(
+                _semanticUiReact.Card.Group,
+                null,
+                _react2.default.createElement(
+                    _semanticUiReact.Card,
+                    { fluid: true },
+                    _react2.default.createElement(
+                        _semanticUiReact.Card.Content,
+                        null,
+                        _react2.default.createElement(_semanticUiReact.Image, { floated: 'right', size: 'mini', src: '/assets/images/avatar/large/steve.jpg' }),
+                        _react2.default.createElement(
+                            _semanticUiReact.Card.Header,
+                            null,
+                            'Steve Sanders'
+                        ),
+                        _react2.default.createElement(
+                            _semanticUiReact.Card.Meta,
+                            null,
+                            'Ingeniero'
+                        ),
+                        _react2.default.createElement(
+                            _semanticUiReact.Card.Description,
+                            null,
+                            'Steve wants to add you to the group ',
+                            _react2.default.createElement(
+                                'strong',
+                                null,
+                                'best friends'
+                            )
+                        )
+                    ),
+                    _react2.default.createElement(
+                        _semanticUiReact.Card.Content,
+                        { extra: true },
+                        _react2.default.createElement(
+                            'strong',
+                            null,
+                            'Peligro ',
+                            _react2.default.createElement('br', null)
+                        ),
+                        _react2.default.createElement(
+                            'a',
+                            null,
+                            _react2.default.createElement(_semanticUiReact.Rating, { defaultRating: 3, maxRating: 5, disabled: true })
+                        )
+                    )
+                ),
+                _react2.default.createElement(
+                    _semanticUiReact.Card,
+                    { fluid: true },
+                    _react2.default.createElement(
+                        _semanticUiReact.Card.Content,
+                        null,
+                        _react2.default.createElement(_semanticUiReact.Image, { floated: 'right', size: 'mini', src: '/assets/images/avatar/large/molly.png' }),
+                        _react2.default.createElement(
+                            _semanticUiReact.Card.Header,
+                            null,
+                            'Molly Thomas'
+                        ),
+                        _react2.default.createElement(
+                            _semanticUiReact.Card.Meta,
+                            null,
+                            'Ingeniero'
+                        ),
+                        _react2.default.createElement(
+                            _semanticUiReact.Card.Description,
+                            null,
+                            'Molly wants to add you to the group ',
+                            _react2.default.createElement(
+                                'strong',
+                                null,
+                                'musicians'
+                            )
+                        )
+                    ),
+                    _react2.default.createElement(
+                        _semanticUiReact.Card.Content,
+                        { extra: true },
+                        _react2.default.createElement(
+                            'strong',
+                            null,
+                            'Peligro ',
+                            _react2.default.createElement('br', null)
+                        ),
+                        _react2.default.createElement(
+                            'a',
+                            null,
+                            _react2.default.createElement(_semanticUiReact.Rating, { defaultRating: 3, maxRating: 5, disabled: true })
+                        )
+                    )
+                )
+            ),
+            _react2.default.createElement(
+                'div',
+                { style: { marginTop: '50px', marginBottom: '50px' } },
+                _react2.default.createElement(
+                    _semanticUiReact.Button,
+                    { primary: true },
+                    'Registra Tu Revision'
+                )
+            )
+        )
+    );
+};
+
+exports.default = Grieta;
 
 /***/ })
 /******/ ]);

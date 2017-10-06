@@ -90,7 +90,10 @@ const filtros = ({
     </FormControl>
     <Button raised color="accent" onClick={()=>busqueda(true)} >
         Accent
-      </Button>
+    </Button>
+    <Button raised color="accent" onClick={()=>busqueda(false)} >
+        Limpiar
+    </Button>    
 </form>
 </div>
 )

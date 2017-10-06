@@ -2,6 +2,9 @@ import React from 'react';
 import * as Semantic  from 'semantic-ui-react'
 import Filtros from './filtros.jsx'
 import styles from './style.css'
+import AddIcon from 'material-ui-icons/Add';
+import ModeEditIcon from 'material-ui-icons/ModeEdit';
+import Button from 'material-ui/Button'
 
 const HeaderComponent = ({
     items,
@@ -9,6 +12,7 @@ const HeaderComponent = ({
     handleChange,
     busqueda
 }) => (
+    <div>
     <div className='divImage'>
                 <Filtros filters={filters} handleChange={handleChange} busqueda={busqueda} />
                 <Semantic.Card.Group style={{textAlign:'center', textAlign:'-webkit-center',paddingLeft:'15%', paddingRight:'15%', width:`${window.innerWidth}px`}}>
@@ -39,9 +43,15 @@ const HeaderComponent = ({
             )
             
         })}
-                </Semantic.Card.Group>    
-        
-    </div>  
+                </Semantic.Card.Group>
+           
+        <Button fab color="primary" aria-label="add" className='buttonTop'>
+                    <AddIcon />
+        </Button>
+       
+    </div>
+            
+    </div>
 );
 
 export default HeaderComponent;
