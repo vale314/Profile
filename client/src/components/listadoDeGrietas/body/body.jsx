@@ -5,6 +5,8 @@ import styles from './style.css'
 import AddIcon from 'material-ui-icons/Add';
 import ModeEditIcon from 'material-ui-icons/ModeEdit';
 import Button from 'material-ui/Button'
+import {Container} from 'semantic-ui-react'
+
 
 const HeaderComponent = ({
     items,
@@ -13,9 +15,10 @@ const HeaderComponent = ({
     busqueda
 }) => (
     <div>
-    <div className='divImage'>
+
+        <Container style={{textAlign:'-webkit-center'}}>
                 <Filtros filters={filters} handleChange={handleChange} busqueda={busqueda} />
-                <Semantic.Card.Group style={{textAlign:'center', textAlign:'-webkit-center',paddingLeft:'15%', paddingRight:'15%', width:`${window.innerWidth}px`}}>
+                <Semantic.Card.Group style={{textAlign:'center'}}>
         {items.map((value,index)=>{
             return(
                     <Semantic.Card key={index}  style={{textAlign:'center', textAlign:'-webkit-center'}} >
@@ -48,8 +51,8 @@ const HeaderComponent = ({
         <Button fab color="primary" aria-label="add" className='buttonTop'>
                     <AddIcon />
         </Button>
-       
-    </div>
+       </Container>
+
             
     </div>
 );
